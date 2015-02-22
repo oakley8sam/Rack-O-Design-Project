@@ -9,9 +9,9 @@ public class Game {
 	private Player p2;
 	private Player p3;
 	private Player p4;
-	public Game(Stack<Integer> d, Stack<Integer> dis){
-		draw = d;
-		discard = dis;
+	public Game(){
+		draw = new Stack();
+		discard = new Stack();
 	}
 	public void newGame(Integer n){
 		numPlay=n;
@@ -31,7 +31,6 @@ public class Game {
 			b++;
 			draw.push(b);
 		} while (b<20+numPlay*10);
-			
 	}
 	public void newHand(){
 		//shuffle and deal 10 to each player
@@ -64,4 +63,11 @@ public class Game {
 		//getter for the discard pile
 		return discard;
 	}
+	
+	public static void main (String[]args)
+	{
+		Game test = new Game();
+		test.newGame(3);
+	}	
 }
+
