@@ -11,10 +11,15 @@ public class Player {
 	//ints k and j are used to scan racks for scores at the end of each hand
 	private int k=0;
 	private int j=-1;
-	public Player(ArrayList<Integer> h, ArrayList<Integer> r, int s){
+	/*public Player(ArrayList<Integer> h, ArrayList<Integer> r, int s){
 		hand=h; //the value to player is currently waiting to swap or discard
 		rack=r; //the ten cards in front of a player
 		score=s;
+	}*/
+	public Player(){
+		hand = new ArrayList<Integer>();//the value to player is currently waiting to swap or discard
+		rack = new ArrayList<Integer>();//the ten cards in front of a player
+		score=0;
 	}
 	public void drawDraw(){
 		//draw from the drawstack
