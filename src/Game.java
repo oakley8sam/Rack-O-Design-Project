@@ -1,32 +1,32 @@
 import java.util.Collections;
 import java.util.Stack;
+import java.util.Scanner;
 public class Game {
 	private Stack<Integer> draw;
 	private Stack<Integer> discard;
 	private int b = 0;
-	private int numPlay=0;
+	private int numPlay;
 	private Player p1;
 	private Player p2;
 	private Player p3;
 	private Player p4;
 	public Game(){
-		draw = new Stack();
-		discard = new Stack();
+		draw = new Stack<Integer>();
+		discard = new Stack<Integer>();
 	}
-	public void newGame(Integer n){
-		numPlay=n;
+	public void newGame(){
 		// ask how many players and create a stack for a deck of that many people 
-		/*s=new Scanner(System.in);
+		Scanner s=new Scanner(System.in);
 		System.out.println("How many players are there?");
 		numPlay=s.nextInt();
-		p1= new Player(null, null, 0);
-		p2= new Player(null, null, 0);
+		p1= new Player();
+		p2= new Player();
 		if (numPlay>=3){
-			p3= new Player(null,null,0);
+			p3= new Player();
 		}
 		if (numPlay==4){
-			p4= new Player(null, null, 0);
-		}*/
+			p4= new Player();
+		}
 		do{
 			b++;
 			draw.push(b);
@@ -63,11 +63,22 @@ public class Game {
 		//getter for the discard pile
 		return discard;
 	}
+	public Player getPlayer1(){
+		return p1;
+	}
+	public Player getPlayer2(){
+		return p2;
+	}
+	public Player getPlayer3(){
+		return p3;
+	}
+	public Player getPlayer4(){
+		return p4;
+	}
 	
 	public static void main (String[]args)
 	{
 		Game test = new Game();
-		test.newGame(3);
+		test.newGame();
 	}	
 }
-
