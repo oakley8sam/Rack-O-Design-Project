@@ -1,0 +1,40 @@
+import java.awt.*;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class MainWindow extends JPanel{
+	
+	JButton start;
+	JButton drawPile;
+	JButton discardPile;
+	JLabel scores;
+	
+	
+	MainWindow(Master a){
+		super();
+		setLayout(new GridLayout(2,2)); //prettier layout
+		setSize(400,400);
+		
+		start = new JButton("Start Game");
+		drawPile = new JButton("DRAW PILE");
+		discardPile = new JButton("DISCARD PILE");
+		scores = new JLabel(("<html><body>Player 1: 0 <br>Player 2: 0 <br>Player 3: 0"));
+		
+		add(start);
+		add(drawPile);
+		add(discardPile);
+		add(scores);
+		setVisible(true);
+		
+		start.addActionListener(a);
+		drawPile.addActionListener(a);
+		discardPile.addActionListener(a);
+		
+		start.setActionCommand("start");
+		drawPile.setActionCommand("draw");
+		discardPile.setActionCommand("discard");
+	}
+
+}
