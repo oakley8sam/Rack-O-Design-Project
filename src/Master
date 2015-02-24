@@ -1,0 +1,77 @@
+import java.awt.*;
+
+import javax.swing.*;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class Master extends JFrame implements ActionListener {
+	MainWindow main;
+	PlayerWindow pw1, pw2, pw3, pw4;
+	Game game;
+	
+	
+	Master(String title){
+		super(title);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+		BoxLayout boxLayout = new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS);
+		setLayout(boxLayout);
+		main = new MainWindow(this);
+		pw1 = new PlayerWindow(this, 1);
+		pw2 = new PlayerWindow(this, 2);
+		pw3 = new PlayerWindow(this, 3);
+		pw4 = new PlayerWindow(this, 4);
+		
+		game = new Game();
+		add(pw1);
+		add(pw2);
+		add(main);
+		add(pw3);
+		add(pw4);
+	}
+	
+	public void actionPerformed(ActionEvent evt)
+	{
+		if (evt.getActionCommand().equals("start"))
+		{
+			game.newGame();
+			game.newHand();
+		}
+		if (evt.getActionCommand().equals("draw")) 
+		{
+			game.getPlayer1().getHand().
+			hand.setText(""+ game.getDraw().pop());
+			
+		}
+		if (evt.getActionCommand().equals("discard"))
+		{
+			game.getPlayer1().getHand().setText(""+ game.getDiscard().pop());
+			
+		}
+		if (evt.getActionCommand().equals("show1"))
+		{
+			for (int i=0;i<10;i++){
+				pw1.rack[i].setText(""+game.getPlayer1().getRack().pop());
+			}
+		}
+		if (evt.getActionCommand().equals("hide1")){
+			for (int i=0;i<10;i++){
+				pw1.rack[i].setText("");
+				}
+		}
+		for (int i=0;i<10;i++){
+			if (evt.getActionCommand().equals(""+i+"_1")){
+				pw1.rack[i].setText(pw1.hand.getText());
+				game.getPlayer1().getRack().get(i) = Integer.parseInt(player.card.getText());
+			}
+		}
+		if (evt.getActionCommand().equals("discard")){
+			int value = Integer.parseInt(pw1.hand.getText());
+			game.getDiscard().push(value);
+		}
+	}
+	public static void main (String[]args)
+	{
+		Master a = new Master("Rack-O"); 
+	}	
+}
