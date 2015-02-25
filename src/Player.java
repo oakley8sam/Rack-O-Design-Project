@@ -4,7 +4,7 @@ public class Player {
 	private Game g1;
 	private ArrayList<Integer> hand;
 	private ArrayList<Integer> rack;
-	private int score = 0;
+	private int score;
 	private int handscore = 0;
 	private Scanner scan;
 	private int swap;
@@ -84,4 +84,9 @@ public class Player {
 		return hand;
 	}
 
+	public static void main (String[]args){
+		Game a = new Game();
+		Player s = new Player(a);
+		System.out.println(s.getScore());
+	}	
 }
