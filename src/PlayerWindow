@@ -10,14 +10,16 @@ public class playerWindow extends JPanel{
 	JButton show;
 	JButton hide;
 	JButton[] rack;
-	JTextField name;
+	JLabel name;
 	JButton hand;
 	JButton discard;
 	JButton endTurn;
+	JLabel[] blanks;
+	
 	
 	playerWindow(Master a, int playNum){
 		super();
-		setLayout(new FlowLayout()); //prettier layout, make sure all 10 cards are in one row
+		setLayout(new GridLayout(0,12)); //prettier layout, make sure all 10 cards are in one row
 		setSize(400,400);
 		
 		show = new JButton("SHOW");
@@ -27,17 +29,17 @@ public class playerWindow extends JPanel{
 			rack[i] = new JButton("");
 		}
 		hand = new JButton("");
-		discard = new JButton("TRASH DAT BISH");
-		name = new JTextField("Player "+playNum);
-		endTurn = new JButton("EndTurn"+playNum);
+		discard = new JButton("DISCARD");
+		name = new JLabel("Player "+playNum);
+		endTurn = new JButton("End Turn");
 		add(show);
 		add(hide);
 		for (int i=0;i<rack.length;i++){
 			add(rack[i]);
 		}
+		add(name);
 		add(hand);
 		add(discard);
-		add(name);
 		add(endTurn);
 		setVisible(true);
 		
