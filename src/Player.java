@@ -16,7 +16,8 @@ public class Player {
 		rack=r; //the ten cards in front of a player
 		score=s;
 	}*/
-	public Player(){
+	public Player(Game a){
+		g1 = a;
 		hand = new ArrayList<Integer>();//the value to player is currently waiting to swap or discard
 		rack = new ArrayList<Integer>();//the ten cards in front of a player
 		score=0;
