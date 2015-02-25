@@ -20,7 +20,7 @@ public class MainWindow extends JPanel{
 		start = new JButton("Start Game");
 		drawPile = new JButton("DRAW PILE");
 		discardPile = new JButton("DISCARD PILE");
-		scores = new JLabel(("<html><body>Player 1: 0 <br>Player 2: 0 <br>Player 3: 0"));
+		scores = new JLabel(("<html><body>Player 1: 0 <br>Player 2: 0 <br>Player 3: 0 <br>Player 4:0"));
 		
 		add(start);
 		add(drawPile);
