@@ -10,6 +10,8 @@ public class MainWindow extends JPanel{
 	JButton drawPile;
 	JButton discardPile;
 	JLabel scores;
+	JTextField numPlay;
+	JLabel discardTop;
 	
 	
 	MainWindow(Master a){
@@ -20,12 +22,17 @@ public class MainWindow extends JPanel{
 		start = new JButton("Start Game");
 		drawPile = new JButton("DRAW PILE");
 		discardPile = new JButton("DISCARD PILE");
-		scores = new JLabel(("<html><body>Player 1: 0 <br>Player 2: 0 <br>Player 3: 0 <br>Player 4:0"));
+		scores = new JLabel(("<html><body>Player 1: "+ 0 + "<br>Player 2: " + 0 + " <br>Player 3: "+ 0 + " <br>Player 4: "+ 0));
+		numPlay = new JTextField("Number of Players (2-4): ");
+		discardTop = new JLabel("");
 		
+		add(numPlay);
 		add(start);
 		add(drawPile);
 		add(discardPile);
+		add(discardTop);
 		add(scores);
+		
 		setVisible(true);
 		
 		start.addActionListener(a);
@@ -36,5 +43,4 @@ public class MainWindow extends JPanel{
 		drawPile.setActionCommand("draw");
 		discardPile.setActionCommand("discard");
 	}
-
 }
