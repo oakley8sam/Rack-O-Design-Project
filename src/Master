@@ -16,6 +16,7 @@ public class Master extends JFrame implements ActionListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		BoxLayout boxLayout = new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS);
 		setLayout(boxLayout);
+		
 		main = new MainWindow(this);
 		pw1 = new PlayerWindow(this, 1);
 		pw2 = new PlayerWindow(this, 2);
@@ -23,11 +24,15 @@ public class Master extends JFrame implements ActionListener {
 		pw4 = new PlayerWindow(this, 4);
 		
 		game = new Game();
+		
 		add(pw1);
 		add(pw2);
 		add(main);
 		add(pw3);
 		add(pw4);
+		
+		setVisible(true);
+		setSize(1200,800);
 	}
 	
 	public void actionPerformed(ActionEvent evt)
@@ -39,19 +44,49 @@ public class Master extends JFrame implements ActionListener {
 		}
 		if (evt.getActionCommand().equals("draw")) 
 		{
-			game.getPlayer1().getHand().
-			hand.setText(""+ game.getDraw().pop());
-			
+			if (game.round%4==0){
+				pw1.hand.setText(""+ game.getDraw().peek());
+				game.getPlayer1().getHand().add(game.getDraw().pop());
+			}
+			if (game.round%4==1){
+				pw2.hand.setText(""+ game.getDraw().peek());
+				game.getPlayer2().getHand().add(game.getDraw().pop());
+			}
+			if (game.round%4==2){
+				pw3.hand.setText(""+ game.getDraw().peek());
+				game.getPlayer3().getHand().add(game.getDraw().pop());
+			}
+			if (game.round%4==3){
+				pw4.hand.setText(""+ game.getDraw().peek());
+				game.getPlayer4().getHand().add(game.getDraw().pop());
+			}
+			game.nextRound();
 		}
 		if (evt.getActionCommand().equals("discard"))
 		{
-			game.getPlayer1().getHand().setText(""+ game.getDiscard().pop());
-			
+			if (game.round%4==0){
+				pw1.hand.setText(""+ game.getDiscard().peek());
+				game.getPlayer1().getHand().add(game.getDiscard().pop());
+			}
+			if (game.round%4==1){
+				pw2.hand.setText(""+ game.getDiscard().peek());
+				game.getPlayer2().getHand().add(game.getDiscard().pop());
+			}
+			if (game.round%4==2){
+				pw3.hand.setText(""+ game.getDiscard().peek());
+				game.getPlayer3().getHand().add(game.getDiscard().pop());
+			}
+			if (game.round%4==3){
+				pw4.hand.setText(""+ game.getDiscard().peek());
+				game.getPlayer4().getHand().add(game.getDiscard().pop());
+			}
 		}
+		
+		//Player 1 Methods
 		if (evt.getActionCommand().equals("show1"))
 		{
 			for (int i=0;i<10;i++){
-				pw1.rack[i].setText(""+game.getPlayer1().getRack().pop());
+				pw1.rack[i].setText(""+game.getPlayer1().getRack().get(i));
 			}
 		}
 		if (evt.getActionCommand().equals("hide1")){
@@ -61,17 +96,100 @@ public class Master extends JFrame implements ActionListener {
 		}
 		for (int i=0;i<10;i++){
 			if (evt.getActionCommand().equals(""+i+"_1")){
+				game.getPlayer1().getRack().set(i,Integer.parseInt(pw1.hand.getText()));
+				game.getDiscard().push(Integer.parseInt(pw1.hand.getText()));
+				
 				pw1.rack[i].setText(pw1.hand.getText());
-				game.getPlayer1().getRack().get(i) = Integer.parseInt(player.card.getText());
+				pw1.hand.setText("");
 			}
 		}
-		if (evt.getActionCommand().equals("discard")){
-			int value = Integer.parseInt(pw1.hand.getText());
-			game.getDiscard().push(value);
+		if (evt.getActionCommand().equals("discard1")){
+			game.getDiscard().push(Integer.parseInt(pw1.hand.getText()));
+			pw1.hand.setText("");
 		}
+		
+		//Player 2
+		if (evt.getActionCommand().equals("show2"))
+		{
+			for (int i=0;i<10;i++){
+				pw2.rack[i].setText(""+game.getPlayer2().getRack().get(i));
+			}
+		}
+		if (evt.getActionCommand().equals("hide2")){
+			for (int i=0;i<10;i++){
+				pw2.rack[i].setText("");
+				}
+		}
+		for (int i=0;i<10;i++){
+			if (evt.getActionCommand().equals(""+i+"_2")){
+				game.getPlayer2().getRack().set(i,Integer.parseInt(pw2.hand.getText()));
+				game.getDiscard().push(Integer.parseInt(pw2.hand.getText()));
+				
+				pw2.rack[i].setText(pw2.hand.getText());
+				pw2.hand.setText("");
+			}
+		}
+		if (evt.getActionCommand().equals("discard2")){
+			game.getDiscard().push(Integer.parseInt(pw2.hand.getText()));
+			pw2.hand.setText("");
+		}
+		
+		//Player 3
+		if (evt.getActionCommand().equals("show3"))
+		{
+			for (int i=0;i<10;i++){
+				pw3.rack[i].setText(""+game.getPlayer3().getRack().get(i));
+			}
+		}
+		if (evt.getActionCommand().equals("hide3")){
+			for (int i=0;i<10;i++){
+				pw3.rack[i].setText("");
+				}
+		}
+		for (int i=0;i<10;i++){
+			if (evt.getActionCommand().equals(""+i+"_3")){
+				game.getPlayer3().getRack().set(i,Integer.parseInt(pw3.hand.getText()));
+				game.getDiscard().push(Integer.parseInt(pw3.hand.getText()));
+				
+				pw3.rack[i].setText(pw3.hand.getText());
+				pw3.hand.setText("");
+			}
+		}
+		if (evt.getActionCommand().equals("discard3")){
+			game.getDiscard().push(Integer.parseInt(pw3.hand.getText()));
+			pw3.hand.setText("");
+		}
+		
+		//Player 4
+		if (evt.getActionCommand().equals("show4"))
+		{
+			for (int i=0;i<10;i++){
+				pw4.rack[i].setText(""+game.getPlayer4().getRack().get(i));
+			}
+		}
+		if (evt.getActionCommand().equals("hide4")){
+			for (int i=0;i<10;i++){
+				pw4.rack[i].setText("");
+				}
+		}
+		for (int i=0;i<10;i++){
+			if (evt.getActionCommand().equals(""+i+"_4")){
+				game.getPlayer4().getRack().set(i,Integer.parseInt(pw4.hand.getText()));
+				game.getDiscard().push(Integer.parseInt(pw4.hand.getText()));
+				
+				pw4.rack[i].setText(pw4.hand.getText());
+				pw4.hand.setText("");
+			}
+		}
+		if (evt.getActionCommand().equals("discard4")){
+			game.getDiscard().push(Integer.parseInt(pw4.hand.getText()));
+			pw4.hand.setText("");
+		}
+		
 	}
 	public static void main (String[]args)
 	{
 		Master a = new Master("Rack-O"); 
+	//	System.out.println(a.game.getPlayer1().getRack());
 	}	
 }
