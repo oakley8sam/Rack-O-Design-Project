@@ -10,22 +10,24 @@ public class Game {
 	private Player p2;
 	private Player p3;
 	private Player p4;
+	int round;
 	public Game(){
 		draw = new Stack<Integer>();
 		discard = new Stack<Integer>();
+		round = 0;
 	}
 	public void newGame(){
 		// ask how many players and create a stack for a deck of that many people 
 		Scanner s=new Scanner(System.in);
 		System.out.println("How many players are there?");
 		numPlay=s.nextInt();
-		p1= new Player();
-		p2= new Player();
+		p1= new Player(this);
+		p2= new Player(this);
 		if (numPlay>=3){
-			p3= new Player();
+			p3= new Player(this);
 		}
 		if (numPlay==4){
-			p4= new Player();
+			p4= new Player(this);
 		}
 		do{
 			b++;
@@ -46,6 +48,10 @@ public class Game {
 			}
 		}
 	}
+	public void nextRound(){
+		round++;
+	}
+	
 	public void disToDraw(){
 		// when the draw pile is empty, move all cards to draw pile and shuffle
 		if (draw.size()==0){
