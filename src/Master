@@ -96,9 +96,8 @@ public class Master extends JFrame implements ActionListener {
 		}
 		for (int i=0;i<10;i++){
 			if (evt.getActionCommand().equals(""+i+"_1")){
+				game.getDiscard().push(game.getPlayer1().getRack().get(i));
 				game.getPlayer1().getRack().set(i,Integer.parseInt(pw1.hand.getText()));
-				game.getDiscard().push(Integer.parseInt(pw1.hand.getText()));
-				
 				pw1.rack[i].setText(pw1.hand.getText());
 				pw1.hand.setText("");
 			}
@@ -122,9 +121,8 @@ public class Master extends JFrame implements ActionListener {
 		}
 		for (int i=0;i<10;i++){
 			if (evt.getActionCommand().equals(""+i+"_2")){
+				game.getDiscard().push(game.getPlayer2().getRack().get(i));
 				game.getPlayer2().getRack().set(i,Integer.parseInt(pw2.hand.getText()));
-				game.getDiscard().push(Integer.parseInt(pw2.hand.getText()));
-				
 				pw2.rack[i].setText(pw2.hand.getText());
 				pw2.hand.setText("");
 			}
@@ -148,9 +146,8 @@ public class Master extends JFrame implements ActionListener {
 		}
 		for (int i=0;i<10;i++){
 			if (evt.getActionCommand().equals(""+i+"_3")){
+				game.getDiscard().push(game.getPlayer3().getRack().get(i));
 				game.getPlayer3().getRack().set(i,Integer.parseInt(pw3.hand.getText()));
-				game.getDiscard().push(Integer.parseInt(pw3.hand.getText()));
-				
 				pw3.rack[i].setText(pw3.hand.getText());
 				pw3.hand.setText("");
 			}
@@ -174,9 +171,8 @@ public class Master extends JFrame implements ActionListener {
 		}
 		for (int i=0;i<10;i++){
 			if (evt.getActionCommand().equals(""+i+"_4")){
+				game.getDiscard().push(game.getPlayer4().getRack().get(i));
 				game.getPlayer4().getRack().set(i,Integer.parseInt(pw4.hand.getText()));
-				game.getDiscard().push(Integer.parseInt(pw4.hand.getText()));
-				
 				pw4.rack[i].setText(pw4.hand.getText());
 				pw4.hand.setText("");
 			}
