@@ -1,191 +1,107 @@
-import java.awt.*;
+import java.util.Collections;
+import java.util.Stack;
+import java.util.Scanner;
 
-import javax.swing.*;
+public class Game {
+	private Stack<Integer> draw;
+	private Stack<Integer> discard;
+	private int b = 0;
+	private Player p1;
+	private Player p2;
+	private Player p3;
+	private Player p4;
+	int round;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-public class Master extends JFrame implements ActionListener {
-	MainWindow main;
-	PlayerWindow pw1, pw2, pw3, pw4;
-	Game game;
-	
-	
-	Master(String title){
-		super(title);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-		BoxLayout boxLayout = new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS);
-		setLayout(boxLayout);
-		
-		main = new MainWindow(this);
-		pw1 = new PlayerWindow(this, 1);
-		pw2 = new PlayerWindow(this, 2);
-		pw3 = new PlayerWindow(this, 3);
-		pw4 = new PlayerWindow(this, 4);
-		
-		game = new Game();
-		
-		add(pw1);
-		add(pw2);
-		add(main);
-		add(pw3);
-		add(pw4);
-		
-		setVisible(true);
-		setSize(1200,800);
+	public Game() {
+		draw = new Stack<Integer>();
+		discard = new Stack<Integer>();
+		round = 0;
 	}
-	
-	public void actionPerformed(ActionEvent evt)
-	{
-		if (evt.getActionCommand().equals("start"))
-		{
-			game.newGame();
-			game.newHand();
+
+	public void newGame(int n) {
+		// ask how many players and create a stack for a deck of that many
+		// people
+		p1 = new Player(this);
+		p2 = new Player(this);
+		if (n >= 3) {
+			p3 = new Player(this);
 		}
-		if (evt.getActionCommand().equals("draw")) 
-		{
-			if (game.round%4==0){
-				pw1.hand.setText(""+ game.getDraw().peek());
-				game.getPlayer1().getHand().add(game.getDraw().pop());
-			}
-			if (game.round%4==1){
-				pw2.hand.setText(""+ game.getDraw().peek());
-				game.getPlayer2().getHand().add(game.getDraw().pop());
-			}
-			if (game.round%4==2){
-				pw3.hand.setText(""+ game.getDraw().peek());
-				game.getPlayer3().getHand().add(game.getDraw().pop());
-			}
-			if (game.round%4==3){
-				pw4.hand.setText(""+ game.getDraw().peek());
-				game.getPlayer4().getHand().add(game.getDraw().pop());
-			}
-			game.nextRound();
+		if (n == 4) {
+			p4 = new Player(this);
 		}
-		if (evt.getActionCommand().equals("discard"))
-		{
-			if (game.round%4==0){
-				pw1.hand.setText(""+ game.getDiscard().peek());
-				game.getPlayer1().getHand().add(game.getDiscard().pop());
-			}
-			if (game.round%4==1){
-				pw2.hand.setText(""+ game.getDiscard().peek());
-				game.getPlayer2().getHand().add(game.getDiscard().pop());
-			}
-			if (game.round%4==2){
-				pw3.hand.setText(""+ game.getDiscard().peek());
-				game.getPlayer3().getHand().add(game.getDiscard().pop());
-			}
-			if (game.round%4==3){
-				pw4.hand.setText(""+ game.getDiscard().peek());
-				game.getPlayer4().getHand().add(game.getDiscard().pop());
-			}
-		}
-		
-		//Player 1 Methods
-		if (evt.getActionCommand().equals("show1"))
-		{
-			for (int i=0;i<10;i++){
-				pw1.rack[i].setText(""+game.getPlayer1().getRack().get(i));
-			}
-		}
-		if (evt.getActionCommand().equals("hide1")){
-			for (int i=0;i<10;i++){
-				pw1.rack[i].setText("");
-				}
-		}
-		for (int i=0;i<10;i++){
-			if (evt.getActionCommand().equals(""+i+"_1")){
-				game.getDiscard().push(game.getPlayer1().getRack().get(i));
-				game.getPlayer1().getRack().set(i,Integer.parseInt(pw1.hand.getText()));
-				pw1.rack[i].setText(pw1.hand.getText());
-				pw1.hand.setText("");
-			}
-		}
-		if (evt.getActionCommand().equals("discard1")){
-			game.getDiscard().push(Integer.parseInt(pw1.hand.getText()));
-			pw1.hand.setText("");
-		}
-		
-		//Player 2
-		if (evt.getActionCommand().equals("show2"))
-		{
-			for (int i=0;i<10;i++){
-				pw2.rack[i].setText(""+game.getPlayer2().getRack().get(i));
-			}
-		}
-		if (evt.getActionCommand().equals("hide2")){
-			for (int i=0;i<10;i++){
-				pw2.rack[i].setText("");
-				}
-		}
-		for (int i=0;i<10;i++){
-			if (evt.getActionCommand().equals(""+i+"_2")){
-				game.getDiscard().push(game.getPlayer2().getRack().get(i));
-				game.getPlayer2().getRack().set(i,Integer.parseInt(pw2.hand.getText()));
-				pw2.rack[i].setText(pw2.hand.getText());
-				pw2.hand.setText("");
-			}
-		}
-		if (evt.getActionCommand().equals("discard2")){
-			game.getDiscard().push(Integer.parseInt(pw2.hand.getText()));
-			pw2.hand.setText("");
-		}
-		
-		//Player 3
-		if (evt.getActionCommand().equals("show3"))
-		{
-			for (int i=0;i<10;i++){
-				pw3.rack[i].setText(""+game.getPlayer3().getRack().get(i));
-			}
-		}
-		if (evt.getActionCommand().equals("hide3")){
-			for (int i=0;i<10;i++){
-				pw3.rack[i].setText("");
-				}
-		}
-		for (int i=0;i<10;i++){
-			if (evt.getActionCommand().equals(""+i+"_3")){
-				game.getDiscard().push(game.getPlayer3().getRack().get(i));
-				game.getPlayer3().getRack().set(i,Integer.parseInt(pw3.hand.getText()));
-				pw3.rack[i].setText(pw3.hand.getText());
-				pw3.hand.setText("");
-			}
-		}
-		if (evt.getActionCommand().equals("discard3")){
-			game.getDiscard().push(Integer.parseInt(pw3.hand.getText()));
-			pw3.hand.setText("");
-		}
-		
-		//Player 4
-		if (evt.getActionCommand().equals("show4"))
-		{
-			for (int i=0;i<10;i++){
-				pw4.rack[i].setText(""+game.getPlayer4().getRack().get(i));
-			}
-		}
-		if (evt.getActionCommand().equals("hide4")){
-			for (int i=0;i<10;i++){
-				pw4.rack[i].setText("");
-				}
-		}
-		for (int i=0;i<10;i++){
-			if (evt.getActionCommand().equals(""+i+"_4")){
-				game.getDiscard().push(game.getPlayer4().getRack().get(i));
-				game.getPlayer4().getRack().set(i,Integer.parseInt(pw4.hand.getText()));
-				pw4.rack[i].setText(pw4.hand.getText());
-				pw4.hand.setText("");
-			}
-		}
-		if (evt.getActionCommand().equals("discard4")){
-			game.getDiscard().push(Integer.parseInt(pw4.hand.getText()));
-			pw4.hand.setText("");
-		}
-		
 	}
-	public static void main (String[]args)
-	{
-		Master a = new Master("Rack-O"); 
-	//	System.out.println(a.game.getPlayer1().getRack());
-	}	
+
+	public void newHand(int n) {
+		draw.clear();
+		discard.clear();
+		p1.getRack().clear();
+		p2.getRack().clear();
+		if (n >= 3) {
+			p3.getRack().clear();
+		}
+		if (n == 4){
+			p4.getRack().clear();
+		}
+		do {
+			b++;
+			draw.push(b);
+		} while (b < 20 + n * 10);
+		// shuffle and deal 10 to each player
+		Collections.shuffle(draw);
+		while (draw.size() > 20) {
+			p1.getRack().add(draw.pop());
+			p2.getRack().add(draw.pop());
+			if (n >= 3) {
+				p3.getRack().add(draw.pop());
+			}
+			if (n == 4) {
+				p4.getRack().add(draw.pop());
+			}
+		}
+	}
+
+	public void disToDraw() {
+		// when the draw pile is empty, move all cards to draw pile and shuffle
+		if (draw.size() == 0) {
+			while (discard.size() > 0) {
+				draw.add(discard.pop());
+			}
+		}
+		Collections.shuffle(draw);
+	}
+
+	public Stack<Integer> getDraw() {
+		// getter for the draw pile
+		return draw;
+	}
+
+	public Stack<Integer> getDiscard() {
+		// getter for the discard pile
+		return discard;
+	}
+
+	public Player getPlayer1() {
+		return p1;
+	}
+
+	public Player getPlayer2() {
+		return p2;
+	}
+
+	public Player getPlayer3() {
+		return p3;
+	}
+
+	public Player getPlayer4() {
+		return p4;
+	}
+
+	public int getRound() {
+		return round;
+	}
+
+	public void setRound(int a) {
+		round = a;
+	}
+
 }
