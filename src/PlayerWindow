@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PlayerWindow extends JPanel{ 
+public class playerWindow extends JPanel{ 
 	
 	JButton show;
 	JButton hide;
@@ -15,7 +15,7 @@ public class PlayerWindow extends JPanel{
 	JButton discard;
 	JButton endTurn;
 	
-	PlayerWindow(Master a, int playNum){
+	playerWindow(Master a, int playNum){
 		super();
 		setLayout(new FlowLayout()); //prettier layout, make sure all 10 cards are in one row
 		setSize(400,400);
@@ -28,8 +28,8 @@ public class PlayerWindow extends JPanel{
 		}
 		hand = new JButton("");
 		discard = new JButton("TRASH DAT BISH");
-		name = new JButton("Player "+playNum);
-		endTurn = new 
+		name = new JTextField("Player "+playNum);
+		endTurn = new JButton("EndTurn"+playNum);
 		add(show);
 		add(hide);
 		for (int i=0;i<rack.length;i++){
@@ -38,6 +38,7 @@ public class PlayerWindow extends JPanel{
 		add(hand);
 		add(discard);
 		add(name);
+		add(endTurn);
 		setVisible(true);
 		
 		show.addActionListener(a);
@@ -47,6 +48,7 @@ public class PlayerWindow extends JPanel{
 			rack[i].addActionListener(a);
 		}
 		discard.addActionListener(a);
+		endTurn.addActionListener(a);
 		
 		show.setActionCommand("show"+playNum);
 		hide.setActionCommand("hide"+playNum);
@@ -55,5 +57,6 @@ public class PlayerWindow extends JPanel{
 			rack[i].setActionCommand(""+i+"_"+playNum);
 		}
 		discard.setActionCommand("discard"+playNum);
+		endTurn.setActionCommand("endTurn"+playNum);
 	}
 }
