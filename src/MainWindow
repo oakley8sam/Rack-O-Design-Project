@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MainWindow extends JPanel{
-	//the buttons seen in the middle section of the gui
+	
 	JButton start;
 	JButton drawPile;
 	JButton discardPile;
@@ -15,9 +15,8 @@ public class MainWindow extends JPanel{
 	
 	
 	MainWindow(Master a){
-		//create the buttons and allow them to be linked to actions
 		super();
-		setLayout(new GridLayout(2,2)); //prettier layout
+		setLayout(new GridLayout(3,0)); //prettier layout
 		setSize(400,400);
 		
 		start = new JButton("Start Game");
