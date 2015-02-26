@@ -24,11 +24,10 @@ public class playerWindow extends JPanel{
 	JLabel blank8;
 	
 	playerWindow(Master a, int playNum){
-		//createes the buttons and labels and allows the to be linked to actions
 		super();
-		setLayout(new GridLayout(0,12)); //prettier layout, make sure all 10 cards are in one row
+		setLayout(new GridLayout(0,12));
 		setSize(400,400);
-		
+		//creates the buttons and labels and allows the to be linked to actions
 		show = new JButton("SHOW");
 		hide = new JButton("HIDE");
 		rack = new JButton[10];
