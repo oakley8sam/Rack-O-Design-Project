@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class playerWindow extends JPanel{ 
-	
+	//the buttons and labels in each player's panel
 	JButton show;
 	JButton hide;
 	JButton[] rack;
@@ -24,6 +24,7 @@ public class playerWindow extends JPanel{
 	JLabel blank8;
 	
 	playerWindow(Master a, int playNum){
+		//createes the buttons and labels and allows the to be linked to actions
 		super();
 		setLayout(new GridLayout(0,12)); //prettier layout, make sure all 10 cards are in one row
 		setSize(400,400);
