@@ -168,12 +168,14 @@ public class Master extends JFrame implements ActionListener {
 				game.setRound(0);
 				game.newHand(numPlay);
 			}
-			if (game.getPlayer1().getScore() >= 500
+		/*	
+		 * if (game.getPlayer1().getScore() >= 500
 					|| game.getPlayer2().getScore() >= 500
 					|| game.getPlayer3().getScore() >= 500
 					|| game.getPlayer4().getScore() >= 500) {
 				// add congratulation popup
 			}
+		*/
 			for (int i = 0; i < 10; i++) {
 				pw1.rack[i].setText("");
 			}
@@ -216,12 +218,13 @@ public class Master extends JFrame implements ActionListener {
 				game.setRound(0);
 				game.newHand(numPlay);
 			}
-			if (game.getPlayer1().getScore() >= 500
+			/*if (game.getPlayer1().getScore() >= 500
 					|| game.getPlayer2().getScore() >= 500
 					|| game.getPlayer3().getScore() >= 500
 					|| game.getPlayer4().getScore() >= 500) {
 				// add congratulation popup
 			}
+			*/
 			for (int i = 0; i < 10; i++) {
 				pw2.rack[i].setText("");
 			}
@@ -268,12 +271,13 @@ public class Master extends JFrame implements ActionListener {
 				game.setRound(0);
 				game.newHand(numPlay);
 			}
-			if (game.getPlayer1().getScore() >= 500
-					|| game.getPlayer2().getScore() >= 500
-					|| game.getPlayer3().getScore() >= 500
-					|| game.getPlayer4().getScore() >= 500) {
-				// add congratulation popup
-			}
+			/*if (game.getPlayer1().getScore() >= 500
+			|| game.getPlayer2().getScore() >= 500
+			|| game.getPlayer3().getScore() >= 500
+			|| game.getPlayer4().getScore() >= 500) {
+		// add congratulation popup
+	}
+	*/
 			for (int i = 0; i < 10; i++) {
 				pw3.rack[i].setText("");
 			}
@@ -316,12 +320,13 @@ public class Master extends JFrame implements ActionListener {
 				game.setRound(0);
 				game.newHand(numPlay);
 			}
-			if (game.getPlayer1().getScore() >= 500
-					|| game.getPlayer2().getScore() >= 500
-					|| game.getPlayer3().getScore() >= 500
-					|| game.getPlayer4().getScore() >= 500) {
-				// add congratulation popup
+			/*if (game.getPlayer1().getScore() >= 500
+			|| game.getPlayer2().getScore() >= 500
+			|| game.getPlayer3().getScore() >= 500
+			|| game.getPlayer4().getScore() >= 500) {
+		// add congratulation popup
 			}
+			 */
 			for (int i = 0; i < 10; i++) {
 				pw4.rack[i].setText("");
 			}
