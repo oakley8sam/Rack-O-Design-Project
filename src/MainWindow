@@ -24,14 +24,14 @@ public class MainWindow extends JPanel{
 		discardPile = new JButton("DISCARD PILE");
 		scores = new JLabel(("<html><body>Player 1: "+ 0 + "<br>Player 2: " + 0 + " <br>Player 3: "+ 0 + " <br>Player 4: "+ 0));
 		numPlay = new JTextField("Number of Players (2-4): ");
-		discardTop = new JLabel("");
+		discardTop = new JLabel("DISCARD TOP:");
 		
 		add(numPlay);
 		add(start);
-		add(discardPile);
 		add(drawPile);
-		add(discardTop);
+		add(discardPile);
 		add(scores);
+		add(discardTop);
 		
 		setVisible(true);
 		
