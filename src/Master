@@ -146,7 +146,7 @@ public class Master extends JFrame implements ActionListener {
 		for (int i = 0; i < 10; i++) {
 			if (evt.getActionCommand().equals("" + i + "_1")) {
 				main.discardTop
-						.setText("" + game.getPlayer1().getRack().get(i));
+						.setText("DISCARD TOP: " + game.getPlayer1().getRack().get(i));
 				game.getDiscard().push(game.getPlayer1().getRack().get(i));
 				game.getPlayer1().getRack()
 						.set(i, Integer.parseInt(pw1.hand.getText()));
@@ -156,7 +156,7 @@ public class Master extends JFrame implements ActionListener {
 		}
 		if (evt.getActionCommand().equals("discard1")) {
 			game.getDiscard().push(Integer.parseInt(pw1.hand.getText()));
-			main.discardTop.setText(pw1.hand.getText());
+			main.discardTop.setText("DISCARD TOP:" + pw1.hand.getText());
 			pw1.hand.setText("");
 		}
 		if (evt.getActionCommand().equals("endTurn1")) {
@@ -234,6 +234,7 @@ public class Master extends JFrame implements ActionListener {
 		if (evt.getActionCommand().equals("show3")) {
 			if (numPlay < 3) {
 				pw3.show.setText("u thug");
+				pw3.hand.setEnabled(false);
 				pw3.show.setEnabled(false);
 			} else
 				for (int i = 0; i < 10; i++) {
@@ -242,13 +243,50 @@ public class Master extends JFrame implements ActionListener {
 				}
 		}
 		if (evt.getActionCommand().equals("hide3")) {
-			for (int i = 0; i < 10; i++) {
+			if (numPlay < 3) {
+				pw3.hide.setText("so kl");
+				pw3.hide.setEnabled(false);
+			} else
+				for (int i = 0; i < 10; i++) {
 				pw3.rack[i].setText("");
 			}
 		}
 		for (int i = 0; i < 10; i++) {
 			if (evt.getActionCommand().equals("" + i + "_3")) {
-				main.discardTop
+				if (numPlay < 3) {
+					if(i == 0){
+						pw3.rack[0].setText("but stop");
+					}
+					if (i == 1){
+						pw3.rack[1].setText("now");
+					}
+					if (i == 2){
+						pw3.rack[2].setText("4 rl");
+					}
+					if (i == 3){
+						pw3.rack[3].setText("i mean it");
+					}
+					if (i == 4){
+						pw3.rack[4].setText("stop");
+					}
+					if (i == 5){
+						pw3.rack[5].setText("really?");
+					}
+					if (i == 6){
+						pw3.rack[6].setText("still?");
+					}
+					if (i == 7){
+						pw3.rack[7].setText("play the game");
+					}
+					if (i == 8){
+						pw3.rack[8].setText("shoo");
+					}
+					if (i == 9){
+						pw3.rack[9].setText("SHOOOO");
+					}
+					pw3.rack[i].setEnabled(false);
+				} else
+					main.discardTop
 						.setText("" + game.getPlayer3().getRack().get(i));
 				game.getDiscard().push(game.getPlayer3().getRack().get(i));
 				game.getPlayer3().getRack()
@@ -258,11 +296,35 @@ public class Master extends JFrame implements ActionListener {
 			}
 		}
 		if (evt.getActionCommand().equals("discard3")) {
+			if (numPlay < 3) {
+				pw3.discard.setText("...");
+				pw3.discard.setEnabled(false);
+			} else
 			game.getDiscard().push(Integer.parseInt(pw3.hand.getText()));
 			main.discardTop.setText(pw3.hand.getText());
 			pw3.hand.setText("");
 		}
 		if (evt.getActionCommand().equals("endTurn3")) {
+			if (numPlay < 3) {
+				pw3.endTurn.setText("ok bye");
+				pw3.show.setText("");
+				pw3.hide.setText("");
+				pw3.discard.setText("");
+				pw4.show.setText("");
+				pw4.hide.setText("");
+				pw4.discard.setText("");
+				pw4.endTurn.setText("");
+				pw3.endTurn.setEnabled(false);
+				pw4.show.setEnabled(false);
+				pw4.hide.setEnabled(false);
+				for(int i=0;i<10;i++)
+				{
+					pw4.rack[i].setEnabled(false);
+				}
+				pw4.hand.setEnabled(false);
+				pw4.discard.setEnabled(false);
+				pw4.endTurn.setEnabled(false);
+			} else
 			if (game.getPlayer3().rackO()) {
 				game.getPlayer1().sumScore();
 				game.getPlayer2().sumScore();
@@ -285,15 +347,16 @@ public class Master extends JFrame implements ActionListener {
 		}
 		// Player 4
 		if (evt.getActionCommand().equals("show4")) {
-			for (int i = 0; i < 10; i++) {
+				for (int i = 0; i < 10; i++) {
 				pw4.rack[i].setText("" + game.getPlayer4().getRack().get(i));
 			}
 		}
 		if (evt.getActionCommand().equals("hide4")) {
-			for (int i = 0; i < 10; i++) {
-				pw4.rack[i].setText("");
+		for (int i = 0; i < 10; i++) {
+			pw4.rack[i].setText("");
 			}
 		}
+		
 		for (int i = 0; i < 10; i++) {
 			if (evt.getActionCommand().equals("" + i + "_4")) {
 				main.discardTop
