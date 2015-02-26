@@ -28,7 +28,7 @@ public class MainWindow extends JPanel{
 		
 		add(numPlay);
 		add(start);
-		add(drawPile);
+		add(drawPile);     
 		add(discardPile);
 		add(scores);
 		add(discardTop);
