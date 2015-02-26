@@ -14,8 +14,14 @@ public class playerWindow extends JPanel{
 	JButton hand;
 	JButton discard;
 	JButton endTurn;
-	JLabel[] blanks;
-	
+	JLabel blank1;
+	JLabel blank2;
+	JLabel blank3;
+	JLabel blank4;
+	JLabel blank5;
+	JLabel blank6;
+	JLabel blank7;
+	JLabel blank8;
 	
 	playerWindow(Master a, int playNum){
 		super();
@@ -32,14 +38,31 @@ public class playerWindow extends JPanel{
 		discard = new JButton("DISCARD");
 		name = new JLabel("Player "+playNum);
 		endTurn = new JButton("End Turn");
+		blank1 = new JLabel("");
+		blank2 = new JLabel("");
+		blank3 = new JLabel("");
+		blank4 = new JLabel("");
+		blank5 = new JLabel("");
+		blank6 = new JLabel("");
+		blank7 = new JLabel("");
+		blank8 = new JLabel("");
 		add(show);
 		add(hide);
 		for (int i=0;i<rack.length;i++){
 			add(rack[i]);
 		}
+		
 		add(name);
+		add(blank1);
+		add(blank2);
+		add(blank3);
+		add(blank4);
 		add(hand);
 		add(discard);
+		add(blank5);
+		add(blank6);
+		add(blank7);
+		add(blank8);
 		add(endTurn);
 		setVisible(true);
 		
