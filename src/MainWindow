@@ -28,10 +28,11 @@ public class MainWindow extends JPanel{
 		
 		add(numPlay);
 		add(start);
+		add(scores);
 		add(drawPile);
 		add(discardPile);
 		add(discardTop);
-		add(scores);
+		
 		
 		setVisible(true);
 		
