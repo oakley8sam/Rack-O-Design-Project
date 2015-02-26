@@ -17,7 +17,7 @@ public class Master extends JFrame implements ActionListener {
 		BoxLayout boxLayout = new BoxLayout(this.getContentPane(),
 				BoxLayout.Y_AXIS);
 		setLayout(boxLayout);
-
+		//creates and adds player and main game windows
 		main = new MainWindow(this);
 		pw1 = new playerWindow(this, 1);
 		pw2 = new playerWindow(this, 2);
@@ -37,7 +37,10 @@ public class Master extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent evt) {
+		//actions upon button presses
 		if (evt.getActionCommand().equals("start")) {
+			//draws from the draw pile for each player based on round, different mods for different number of players
+			//in order to keep the rounds accurate and make sure it is the correct person's turn
 			numPlay = Integer.parseInt(main.numPlay.getText().substring(
 					main.numPlay.getText().length() - 1));
 			game.newGame(numPlay);
@@ -88,6 +91,8 @@ public class Master extends JFrame implements ActionListener {
 			}
 		}
 		if (evt.getActionCommand().equals("discard")) {
+			//draws from the discard pile for each player based on round, different mods for different number of players in order
+			//to keep the rounds accurate and make sure it is the correct person's turn
 			if (numPlay == 2) {
 				if (game.round % 2 == 0) {
 					pw1.hand.setText("" + game.getDiscard().peek());
@@ -131,19 +136,25 @@ public class Master extends JFrame implements ActionListener {
 				}
 			}
 		}
-
+		//each method is the same for every player, but in order to have the method effect the correct player
+		//methods needed to be created specifying which player is performing the action
 		// Player 1 Methods
 		if (evt.getActionCommand().equals("show1")) {
+			//shows the player's rack, use this when it is this player's turn
 			for (int i = 0; i < 10; i++) {
 				pw1.rack[i].setText("" + game.getPlayer1().getRack().get(i));
 			}
 		}
 		if (evt.getActionCommand().equals("hide1")) {
+			//hides the player's rack, use this when it is not your turn so that the other players
+			//cannot see your rack
 			for (int i = 0; i < 10; i++) {
 				pw1.rack[i].setText("");
 			}
 		}
 		for (int i = 0; i < 10; i++) {
+			//actions performed when swapping a card from your hand with one in your rack,
+			//the swapped card is immediately discarded
 			if (evt.getActionCommand().equals("" + i + "_1")) {
 				main.discardTop
 						.setText("DISCARD TOP: " + game.getPlayer1().getRack().get(i));
@@ -155,10 +166,14 @@ public class Master extends JFrame implements ActionListener {
 			}
 		}
 		if (evt.getActionCommand().equals("discard1")) {
+			//used when the card you just drew is not being swapped with one in your rack, simply discards the card
 			game.getDiscard().push(Integer.parseInt(pw1.hand.getText()));
 			main.discardTop.setText("DISCARD TOP:" + pw1.hand.getText());
 			pw1.hand.setText("");
 		}
+		//used at the end of your turn. checks to see if you have "Rack-O" and if so adds scores for each player
+		//and starts a new hand, also checks to see if someone's score is over 500, at which point the game is over. 
+		//also increments round
 		if (evt.getActionCommand().equals("endTurn1")) {
 			if (game.getPlayer1().rackO()) {
 				game.getPlayer1().sumScore();
@@ -233,6 +248,8 @@ public class Master extends JFrame implements ActionListener {
 		// Player 3
 		if (evt.getActionCommand().equals("show3")) {
 			if (numPlay < 3) {
+			//these if statements, throughout the player 3 and 4 methods, disable the buttons for these players
+			//if the user said that there are only 2 or three players, we added some hidden messages for fun
 				pw3.show.setText("u thug");
 				pw3.hand.setEnabled(false);
 				pw3.show.setEnabled(false);
