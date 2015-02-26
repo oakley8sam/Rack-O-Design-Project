@@ -192,7 +192,7 @@ public class Master extends JFrame implements ActionListener {
 			}
 		}
 		for (int i = 0; i < 10; i++) {
-			if (evt.getActionCommand().equals("" + i + "_1")) {
+			if (evt.getActionCommand().equals("" + i + "_2")) {
 				main.discardTop
 						.setText("" + game.getPlayer2().getRack().get(i));
 				game.getDiscard().push(game.getPlayer2().getRack().get(i));
@@ -244,7 +244,7 @@ public class Master extends JFrame implements ActionListener {
 			}
 		}
 		for (int i = 0; i < 10; i++) {
-			if (evt.getActionCommand().equals("" + i + "_1")) {
+			if (evt.getActionCommand().equals("" + i + "_3")) {
 				main.discardTop
 						.setText("" + game.getPlayer3().getRack().get(i));
 				game.getDiscard().push(game.getPlayer3().getRack().get(i));
@@ -291,7 +291,7 @@ public class Master extends JFrame implements ActionListener {
 			}
 		}
 		for (int i = 0; i < 10; i++) {
-			if (evt.getActionCommand().equals("" + i + "_1")) {
+			if (evt.getActionCommand().equals("" + i + "_4")) {
 				main.discardTop
 						.setText("" + game.getPlayer4().getRack().get(i));
 				game.getDiscard().push(game.getPlayer4().getRack().get(i));
