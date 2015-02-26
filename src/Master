@@ -67,7 +67,7 @@ public class Master extends JFrame implements ActionListener {
 					pw3.hand.setText("" + game.getDraw().peek());
 					game.getPlayer3().getHand().add(game.getDraw().pop());
 				}
-			}	
+			}
 			if (numPlay == 4) {
 				if (game.round % 4 == 0) {
 					pw1.hand.setText("" + game.getDraw().peek());
@@ -111,7 +111,7 @@ public class Master extends JFrame implements ActionListener {
 					pw3.hand.setText("" + game.getDiscard().peek());
 					game.getPlayer3().getHand().add(game.getDiscard().pop());
 				}
-			}	
+			}
 			if (numPlay == 4) {
 				if (game.round % 4 == 0) {
 					pw1.hand.setText("" + game.getDiscard().peek());
@@ -145,9 +145,11 @@ public class Master extends JFrame implements ActionListener {
 		}
 		for (int i = 0; i < 10; i++) {
 			if (evt.getActionCommand().equals("" + i + "_1")) {
-				main.discardTop.setText(""+game.getPlayer1().getRack().get(i));
+				main.discardTop
+						.setText("" + game.getPlayer1().getRack().get(i));
 				game.getDiscard().push(game.getPlayer1().getRack().get(i));
-				game.getPlayer1().getRack().set(i, Integer.parseInt(pw1.hand.getText()));
+				game.getPlayer1().getRack()
+						.set(i, Integer.parseInt(pw1.hand.getText()));
 				pw1.rack[i].setText(pw1.hand.getText());
 				pw1.hand.setText("");
 			}
@@ -166,8 +168,11 @@ public class Master extends JFrame implements ActionListener {
 				game.setRound(0);
 				game.newHand(numPlay);
 			}
-			if (game.getPlayer1().getScore()>=500 || game.getPlayer2().getScore()>=500 || game.getPlayer3().getScore()>=500 || game.getPlayer4().getScore()>=500){
-				//add congratulation popup
+			if (game.getPlayer1().getScore() >= 500
+					|| game.getPlayer2().getScore() >= 500
+					|| game.getPlayer3().getScore() >= 500
+					|| game.getPlayer4().getScore() >= 500) {
+				// add congratulation popup
 			}
 			for (int i = 0; i < 10; i++) {
 				pw1.rack[i].setText("");
@@ -187,7 +192,9 @@ public class Master extends JFrame implements ActionListener {
 			}
 		}
 		for (int i = 0; i < 10; i++) {
-			if (evt.getActionCommand().equals("" + i + "_2")) {
+			if (evt.getActionCommand().equals("" + i + "_1")) {
+				main.discardTop
+						.setText("" + game.getPlayer2().getRack().get(i));
 				game.getDiscard().push(game.getPlayer2().getRack().get(i));
 				game.getPlayer2().getRack()
 						.set(i, Integer.parseInt(pw2.hand.getText()));
@@ -197,9 +204,29 @@ public class Master extends JFrame implements ActionListener {
 		}
 		if (evt.getActionCommand().equals("discard2")) {
 			game.getDiscard().push(Integer.parseInt(pw2.hand.getText()));
+			main.discardTop.setText(pw2.hand.getText());
 			pw2.hand.setText("");
 		}
-
+		if (evt.getActionCommand().equals("endTurn2")) {
+			if (game.getPlayer2().rackO()) {
+				game.getPlayer1().sumScore();
+				game.getPlayer2().sumScore();
+				game.getPlayer3().sumScore();
+				game.getPlayer4().sumScore();
+				game.setRound(0);
+				game.newHand(numPlay);
+			}
+			if (game.getPlayer1().getScore() >= 500
+					|| game.getPlayer2().getScore() >= 500
+					|| game.getPlayer3().getScore() >= 500
+					|| game.getPlayer4().getScore() >= 500) {
+				// add congratulation popup
+			}
+			for (int i = 0; i < 10; i++) {
+				pw2.rack[i].setText("");
+			}
+			game.setRound(game.getRound() + 1);
+		}
 		// Player 3
 		if (evt.getActionCommand().equals("show3")) {
 			if (numPlay < 3) {
@@ -217,7 +244,9 @@ public class Master extends JFrame implements ActionListener {
 			}
 		}
 		for (int i = 0; i < 10; i++) {
-			if (evt.getActionCommand().equals("" + i + "_3")) {
+			if (evt.getActionCommand().equals("" + i + "_1")) {
+				main.discardTop
+						.setText("" + game.getPlayer3().getRack().get(i));
 				game.getDiscard().push(game.getPlayer3().getRack().get(i));
 				game.getPlayer3().getRack()
 						.set(i, Integer.parseInt(pw3.hand.getText()));
@@ -227,9 +256,29 @@ public class Master extends JFrame implements ActionListener {
 		}
 		if (evt.getActionCommand().equals("discard3")) {
 			game.getDiscard().push(Integer.parseInt(pw3.hand.getText()));
+			main.discardTop.setText(pw3.hand.getText());
 			pw3.hand.setText("");
 		}
-
+		if (evt.getActionCommand().equals("endTurn3")) {
+			if (game.getPlayer3().rackO()) {
+				game.getPlayer1().sumScore();
+				game.getPlayer2().sumScore();
+				game.getPlayer3().sumScore();
+				game.getPlayer4().sumScore();
+				game.setRound(0);
+				game.newHand(numPlay);
+			}
+			if (game.getPlayer1().getScore() >= 500
+					|| game.getPlayer2().getScore() >= 500
+					|| game.getPlayer3().getScore() >= 500
+					|| game.getPlayer4().getScore() >= 500) {
+				// add congratulation popup
+			}
+			for (int i = 0; i < 10; i++) {
+				pw3.rack[i].setText("");
+			}
+			game.setRound(game.getRound() + 1);
+		}
 		// Player 4
 		if (evt.getActionCommand().equals("show4")) {
 			for (int i = 0; i < 10; i++) {
@@ -242,7 +291,9 @@ public class Master extends JFrame implements ActionListener {
 			}
 		}
 		for (int i = 0; i < 10; i++) {
-			if (evt.getActionCommand().equals("" + i + "_4")) {
+			if (evt.getActionCommand().equals("" + i + "_1")) {
+				main.discardTop
+						.setText("" + game.getPlayer4().getRack().get(i));
 				game.getDiscard().push(game.getPlayer4().getRack().get(i));
 				game.getPlayer4().getRack()
 						.set(i, Integer.parseInt(pw4.hand.getText()));
@@ -252,10 +303,31 @@ public class Master extends JFrame implements ActionListener {
 		}
 		if (evt.getActionCommand().equals("discard4")) {
 			game.getDiscard().push(Integer.parseInt(pw4.hand.getText()));
+			main.discardTop.setText(pw4.hand.getText());
 			pw4.hand.setText("");
 		}
-	}
 
+		if (evt.getActionCommand().equals("endTurn4")) {
+			if (game.getPlayer4().rackO()) {
+				game.getPlayer1().sumScore();
+				game.getPlayer2().sumScore();
+				game.getPlayer3().sumScore();
+				game.getPlayer4().sumScore();
+				game.setRound(0);
+				game.newHand(numPlay);
+			}
+			if (game.getPlayer1().getScore() >= 500
+					|| game.getPlayer2().getScore() >= 500
+					|| game.getPlayer3().getScore() >= 500
+					|| game.getPlayer4().getScore() >= 500) {
+				// add congratulation popup
+			}
+			for (int i = 0; i < 10; i++) {
+				pw4.rack[i].setText("");
+			}
+			game.setRound(game.getRound() + 1);
+		}
+	}
 
 	public static void main(String[] args) {
 		Master a = new Master("Rack-O");
