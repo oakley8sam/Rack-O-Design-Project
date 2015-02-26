@@ -9,6 +9,7 @@ public class Master extends JFrame implements ActionListener {
 	MainWindow main;
 	playerWindow pw1, pw2, pw3, pw4;
 	Game game;
+	String congratulations;
 	int numPlay;
 
 	Master(String title) {
@@ -17,7 +18,7 @@ public class Master extends JFrame implements ActionListener {
 		BoxLayout boxLayout = new BoxLayout(this.getContentPane(),
 				BoxLayout.Y_AXIS);
 		setLayout(boxLayout);
-		//creates and adds player and main game windows
+		// creates and adds player and main game windows
 		main = new MainWindow(this);
 		pw1 = new playerWindow(this, 1);
 		pw2 = new playerWindow(this, 2);
@@ -37,10 +38,12 @@ public class Master extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent evt) {
-		//actions upon button presses
+		// actions upon button presses
 		if (evt.getActionCommand().equals("start")) {
-			//draws from the draw pile for each player based on round, different mods for different number of players
-			//in order to keep the rounds accurate and make sure it is the correct person's turn
+			// draws from the draw pile for each player based on round,
+			// different mods for different number of players
+			// in order to keep the rounds accurate and make sure it is the
+			// correct person's turn
 			numPlay = Integer.parseInt(main.numPlay.getText().substring(
 					main.numPlay.getText().length() - 1));
 			game.newGame(numPlay);
@@ -91,8 +94,10 @@ public class Master extends JFrame implements ActionListener {
 			}
 		}
 		if (evt.getActionCommand().equals("discard")) {
-			//draws from the discard pile for each player based on round, different mods for different number of players in order
-			//to keep the rounds accurate and make sure it is the correct person's turn
+			// draws from the discard pile for each player based on round,
+			// different mods for different number of players in order
+			// to keep the rounds accurate and make sure it is the correct
+			// person's turn
 			if (numPlay == 2) {
 				if (game.round % 2 == 0) {
 					pw1.hand.setText("" + game.getDiscard().peek());
@@ -136,28 +141,32 @@ public class Master extends JFrame implements ActionListener {
 				}
 			}
 		}
-		//each method is the same for every player, but in order to have the method effect the correct player
-		//methods needed to be created specifying which player is performing the action
+		// each method is the same for every player, but in order to have the
+		// method effect the correct player
+		// methods needed to be created specifying which player is performing
+		// the action
 		// Player 1 Methods
 		if (evt.getActionCommand().equals("show1")) {
-			//shows the player's rack, use this when it is this player's turn
+			// shows the player's rack, use this when it is this player's turn
 			for (int i = 0; i < 10; i++) {
 				pw1.rack[i].setText("" + game.getPlayer1().getRack().get(i));
 			}
 		}
 		if (evt.getActionCommand().equals("hide1")) {
-			//hides the player's rack, use this when it is not your turn so that the other players
-			//cannot see your rack
+			// hides the player's rack, use this when it is not your turn so
+			// that the other players
+			// cannot see your rack
 			for (int i = 0; i < 10; i++) {
 				pw1.rack[i].setText("");
 			}
 		}
 		for (int i = 0; i < 10; i++) {
-			//actions performed when swapping a card from your hand with one in your rack,
-			//the swapped card is immediately discarded
+			// actions performed when swapping a card from your hand with one in
+			// your rack,
+			// the swapped card is immediately discarded
 			if (evt.getActionCommand().equals("" + i + "_1")) {
-				main.discardTop
-						.setText("DISCARD TOP: " + game.getPlayer1().getRack().get(i));
+				main.discardTop.setText("DISCARD TOP: "
+						+ game.getPlayer1().getRack().get(i));
 				game.getDiscard().push(game.getPlayer1().getRack().get(i));
 				game.getPlayer1().getRack()
 						.set(i, Integer.parseInt(pw1.hand.getText()));
@@ -166,14 +175,17 @@ public class Master extends JFrame implements ActionListener {
 			}
 		}
 		if (evt.getActionCommand().equals("discard1")) {
-			//used when the card you just drew is not being swapped with one in your rack, simply discards the card
+			// used when the card you just drew is not being swapped with one in
+			// your rack, simply discards the card
 			game.getDiscard().push(Integer.parseInt(pw1.hand.getText()));
 			main.discardTop.setText("DISCARD TOP:" + pw1.hand.getText());
 			pw1.hand.setText("");
 		}
-		//used at the end of your turn. checks to see if you have "Rack-O" and if so adds scores for each player
-		//and starts a new hand, also checks to see if someone's score is over 500, at which point the game is over. 
-		//also increments round
+		// used at the end of your turn. checks to see if you have "Rack-O" and
+		// if so adds scores for each player
+		// and starts a new hand, also checks to see if someone's score is over
+		// 500, at which point the game is over.
+		// also increments round
 		if (evt.getActionCommand().equals("endTurn1")) {
 			if (game.getPlayer1().rackO()) {
 				game.getPlayer1().sumScore();
@@ -183,20 +195,39 @@ public class Master extends JFrame implements ActionListener {
 				game.setRound(0);
 				game.newHand(numPlay);
 			}
-		/*	
-		 * if (game.getPlayer1().getScore() >= 500
-					|| game.getPlayer2().getScore() >= 500
-					|| game.getPlayer3().getScore() >= 500
-					|| game.getPlayer4().getScore() >= 500) {
-				// add congratulation popup
+			if (numPlay == 2) {
+				if (game.getPlayer1().getScore() >= 500
+						|| game.getPlayer2().getScore() >= 500) {
+					congratulations = "Game Over, thanks for playing! \nPress Reset Game to play again or simply close the program.";
+					JOptionPane.showMessageDialog(null, congratulations);
+				}
 			}
-		*/
-			for (int i = 0; i < 10; i++) {
-				pw1.rack[i].setText("");
+			if (numPlay >= 3) {
+				if (game.getPlayer1().getScore() >= 500
+						|| game.getPlayer2().getScore() >= 500
+						|| game.getPlayer3().getScore() >= 500) {
+					congratulations = "Game Over, thanks for playing! \nPress Reset Game to play again or simply close the program.";
+					JOptionPane.showMessageDialog(null, congratulations);
+				}
 			}
-			game.setRound(game.getRound() + 1);
+			if (numPlay == 4) {
+				if (game.getPlayer1().getScore() >= 500
+						|| game.getPlayer2().getScore() >= 500
+						|| game.getPlayer3().getScore() >= 500
+						|| game.getPlayer4().getScore() >= 500) {
+					congratulations = "Game Over, thanks for playing! \nPress Reset Game to play again or simply close the program.";
+					JOptionPane.showMessageDialog(null, congratulations);
+				}
+			}
+		
+		for (int i = 0; i < 10; i++) {
+			pw1.rack[i].setText("");
 		}
-
+		if (game.getDraw()==null){
+			game.disToDraw();
+		}
+		game.setRound(game.getRound() + 1);
+		}
 		// Player 2
 		if (evt.getActionCommand().equals("show2")) {
 			for (int i = 0; i < 10; i++) {
@@ -233,23 +264,45 @@ public class Master extends JFrame implements ActionListener {
 				game.setRound(0);
 				game.newHand(numPlay);
 			}
-			/*if (game.getPlayer1().getScore() >= 500
-					|| game.getPlayer2().getScore() >= 500
-					|| game.getPlayer3().getScore() >= 500
-					|| game.getPlayer4().getScore() >= 500) {
-				// add congratulation popup
+			if (numPlay == 2) {
+				if (game.getPlayer1().getScore() >= 500
+						|| game.getPlayer2().getScore() >= 500) {
+					congratulations = "Game Over, thanks for playing! \nPress Reset Game to play again or simply close the program.";
+					JOptionPane.showMessageDialog(null, congratulations);
+				}
 			}
-			*/
+			if (numPlay >= 3) {
+				if (game.getPlayer1().getScore() >= 500
+						|| game.getPlayer2().getScore() >= 500
+						|| game.getPlayer3().getScore() >= 500) {
+					congratulations = "Game Over, thanks for playing! \nPress Reset Game to play again or simply close the program.";
+					JOptionPane.showMessageDialog(null, congratulations);
+				}
+			}
+			if (numPlay == 4) {
+				if (game.getPlayer1().getScore() >= 500
+						|| game.getPlayer2().getScore() >= 500
+						|| game.getPlayer3().getScore() >= 500
+						|| game.getPlayer4().getScore() >= 500) {
+					congratulations = "Game Over, thanks for playing! \nPress Reset Game to play again or simply close the program.";
+					JOptionPane.showMessageDialog(null, congratulations);
+				}
+			}
 			for (int i = 0; i < 10; i++) {
 				pw2.rack[i].setText("");
+			}
+			if (game.getDraw()==null){
+				game.disToDraw();
 			}
 			game.setRound(game.getRound() + 1);
 		}
 		// Player 3
 		if (evt.getActionCommand().equals("show3")) {
 			if (numPlay < 3) {
-			//these if statements, throughout the player 3 and 4 methods, disable the buttons for these players
-			//if the user said that there are only 2 or three players, we added some hidden messages for fun
+				// these if statements, throughout the player 3 and 4 methods,
+				// disable the buttons for these players
+				// if the user said that there are only 2 or three players, we
+				// added some hidden messages for fun
 				pw3.show.setText("u thug");
 				pw3.hand.setEnabled(false);
 				pw3.show.setEnabled(false);
@@ -265,46 +318,46 @@ public class Master extends JFrame implements ActionListener {
 				pw3.hide.setEnabled(false);
 			} else
 				for (int i = 0; i < 10; i++) {
-				pw3.rack[i].setText("");
-			}
+					pw3.rack[i].setText("");
+				}
 		}
 		for (int i = 0; i < 10; i++) {
 			if (evt.getActionCommand().equals("" + i + "_3")) {
 				if (numPlay < 3) {
-					if(i == 0){
+					if (i == 0) {
 						pw3.rack[0].setText("but stop");
 					}
-					if (i == 1){
+					if (i == 1) {
 						pw3.rack[1].setText("now");
 					}
-					if (i == 2){
+					if (i == 2) {
 						pw3.rack[2].setText("4 rl");
 					}
-					if (i == 3){
+					if (i == 3) {
 						pw3.rack[3].setText("i mean it");
 					}
-					if (i == 4){
+					if (i == 4) {
 						pw3.rack[4].setText("stop");
 					}
-					if (i == 5){
+					if (i == 5) {
 						pw3.rack[5].setText("really?");
 					}
-					if (i == 6){
+					if (i == 6) {
 						pw3.rack[6].setText("still?");
 					}
-					if (i == 7){
+					if (i == 7) {
 						pw3.rack[7].setText("play the game");
 					}
-					if (i == 8){
+					if (i == 8) {
 						pw3.rack[8].setText("shoo");
 					}
-					if (i == 9){
+					if (i == 9) {
 						pw3.rack[9].setText("SHOOOO");
 					}
 					pw3.rack[i].setEnabled(false);
 				} else
-					main.discardTop
-						.setText("" + game.getPlayer3().getRack().get(i));
+					main.discardTop.setText(""
+							+ game.getPlayer3().getRack().get(i));
 				game.getDiscard().push(game.getPlayer3().getRack().get(i));
 				game.getPlayer3().getRack()
 						.set(i, Integer.parseInt(pw3.hand.getText()));
@@ -317,7 +370,7 @@ public class Master extends JFrame implements ActionListener {
 				pw3.discard.setText("...");
 				pw3.discard.setEnabled(false);
 			} else
-			game.getDiscard().push(Integer.parseInt(pw3.hand.getText()));
+				game.getDiscard().push(Integer.parseInt(pw3.hand.getText()));
 			main.discardTop.setText(pw3.hand.getText());
 			pw3.hand.setText("");
 		}
@@ -334,46 +387,65 @@ public class Master extends JFrame implements ActionListener {
 				pw3.endTurn.setEnabled(false);
 				pw4.show.setEnabled(false);
 				pw4.hide.setEnabled(false);
-				for(int i=0;i<10;i++)
-				{
+				for (int i = 0; i < 10; i++) {
 					pw4.rack[i].setEnabled(false);
 				}
 				pw4.hand.setEnabled(false);
 				pw4.discard.setEnabled(false);
 				pw4.endTurn.setEnabled(false);
-			} else
-			if (game.getPlayer3().rackO()) {
+			} else if (game.getPlayer3().rackO()) {
 				game.getPlayer1().sumScore();
 				game.getPlayer2().sumScore();
 				game.getPlayer3().sumScore();
 				game.getPlayer4().sumScore();
 				game.setRound(0);
 				game.newHand(numPlay);
+
+				if (numPlay == 2) {
+					if (game.getPlayer1().getScore() >= 500
+							|| game.getPlayer2().getScore() >= 500) {
+						congratulations = "Game Over, thanks for playing! \nPress Reset Game to play again or simply close the program.";
+						JOptionPane.showMessageDialog(null, congratulations);
+					}
+				}
+				if (numPlay >= 3) {
+					if (game.getPlayer1().getScore() >= 500
+							|| game.getPlayer2().getScore() >= 500
+							|| game.getPlayer3().getScore() >= 500) {
+						congratulations = "Game Over, thanks for playing! \nPress Reset Game to play again or simply close the program.";
+						JOptionPane.showMessageDialog(null, congratulations);
+					}
+				}
+				if (numPlay == 4) {
+					if (game.getPlayer1().getScore() >= 500
+							|| game.getPlayer2().getScore() >= 500
+							|| game.getPlayer3().getScore() >= 500
+							|| game.getPlayer4().getScore() >= 500) {
+						congratulations = "Game Over, thanks for playing! \nPress Reset Game to play again or simply close the program.";
+						JOptionPane.showMessageDialog(null, congratulations);
+					}
+				}
 			}
-			/*if (game.getPlayer1().getScore() >= 500
-			|| game.getPlayer2().getScore() >= 500
-			|| game.getPlayer3().getScore() >= 500
-			|| game.getPlayer4().getScore() >= 500) {
-		// add congratulation popup
-	}
-	*/
 			for (int i = 0; i < 10; i++) {
 				pw3.rack[i].setText("");
+			}
+			if (game.getDraw()==null){
+				game.disToDraw();
 			}
 			game.setRound(game.getRound() + 1);
 		}
 		// Player 4
 		if (evt.getActionCommand().equals("show4")) {
-				for (int i = 0; i < 10; i++) {
+			for (int i = 0; i < 10; i++) {
 				pw4.rack[i].setText("" + game.getPlayer4().getRack().get(i));
 			}
 		}
 		if (evt.getActionCommand().equals("hide4")) {
-		for (int i = 0; i < 10; i++) {
-			pw4.rack[i].setText("");
+			for (int i = 0; i < 10; i++) {
+				pw4.rack[i].setText("");
 			}
 		}
-		
+
 		for (int i = 0; i < 10; i++) {
 			if (evt.getActionCommand().equals("" + i + "_4")) {
 				main.discardTop
@@ -400,15 +472,35 @@ public class Master extends JFrame implements ActionListener {
 				game.setRound(0);
 				game.newHand(numPlay);
 			}
-			/*if (game.getPlayer1().getScore() >= 500
-			|| game.getPlayer2().getScore() >= 500
-			|| game.getPlayer3().getScore() >= 500
-			|| game.getPlayer4().getScore() >= 500) {
-		// add congratulation popup
+			if (numPlay == 2) {
+				if (game.getPlayer1().getScore() >= 500
+						|| game.getPlayer2().getScore() >= 500) {
+					congratulations = "Game Over, thanks for playing! \nPress Reset Game to play again or simply close the program.";
+					JOptionPane.showMessageDialog(null, congratulations);
+				}
 			}
-			 */
+			if (numPlay >= 3) {
+				if (game.getPlayer1().getScore() >= 500
+						|| game.getPlayer2().getScore() >= 500
+						|| game.getPlayer3().getScore() >= 500) {
+					congratulations = "Game Over, thanks for playing! \nPress Reset Game to play again or simply close the program.";
+					JOptionPane.showMessageDialog(null, congratulations);
+				}
+			}
+			if (numPlay >= 4) {
+				if (game.getPlayer1().getScore() >= 500
+						|| game.getPlayer2().getScore() >= 500
+						|| game.getPlayer3().getScore() >= 500
+						|| game.getPlayer4().getScore() >= 500) {
+					congratulations = "Game Over, thanks for playing! \nPress Reset Game to play again or simply close the program.";
+					JOptionPane.showMessageDialog(null, congratulations);
+				}
+			}
 			for (int i = 0; i < 10; i++) {
 				pw4.rack[i].setText("");
+			}
+			if (game.getDraw()==null){
+				game.disToDraw();
 			}
 			game.setRound(game.getRound() + 1);
 		}
