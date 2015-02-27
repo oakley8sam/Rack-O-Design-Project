@@ -5,26 +5,29 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MainWindow extends JPanel{
-	//the buttons seen in the middle section of the GUI
+	//the buttons seen in the middle section of the gui
 	JButton start;
 	JButton drawPile;
 	JButton discardPile;
 	JLabel scores;
 	JTextField numPlay;
 	JLabel discardTop;
+	JLabel numCardsInDrawPile;
 	
 	
 	MainWindow(Master a){
-		super();
-		setLayout(new GridLayout(3,0));
-		setSize(400,400);
 		//create the buttons and allow them to be linked to actions
+		super();
+		setLayout(new GridLayout(2,2)); //prettier layout
+		setSize(400,400);
+		
 		start = new JButton("Start Game");
 		drawPile = new JButton("DRAW PILE");
 		discardPile = new JButton("DISCARD PILE");
 		scores = new JLabel(("<html><body>Player 1: "+ 0 + "<br>Player 2: " + 0 + " <br>Player 3: "+ 0 + " <br>Player 4: "+ 0));
 		numPlay = new JTextField("Number of Players (2-4): ");
 		discardTop = new JLabel("DISCARD TOP:");
+		numCardsInDrawPile = new JLabel("Number of cards remaining in draw pile.");
 		
 		add(numPlay);
 		add(start);
@@ -32,6 +35,7 @@ public class MainWindow extends JPanel{
 		add(discardPile);
 		add(scores);
 		add(discardTop);
+		add(numCardsInDrawPile);
 		
 		setVisible(true);
 		
