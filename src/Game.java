@@ -1,4 +1,3 @@
-
 import java.util.Collections;
 import javax.swing.JOptionPane;
 import java.util.Stack;
@@ -59,7 +58,6 @@ public class Game {
 		} while (b < 20 + n * 10);
 		// shuffle and deal 10 to each player
 		Collections.shuffle(draw);
-		System.out.println(draw);
 		
 		while (draw.size() > 20) {
 			if (n== 2){
