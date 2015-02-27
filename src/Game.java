@@ -7,7 +7,6 @@ public class Game {
 	private Stack<Integer> draw;
 	private Stack<Integer> discard;
 	private String deckReplace;
-	private int b = 0;
 	private Player p1;
 	private Player p2;
 	private Player p3;
@@ -34,16 +33,24 @@ public class Game {
 	}
 
 	public void newHand(int n) {
+		int b = 0;
 		//empties hands and decks if they are filled with any values in order to start a new hand
 		//creates a deck and deals to all players based on number of players entered by the user
 		draw.clear();
 		discard.clear();
-		p1.getRack().clear();
-		p2.getRack().clear();
-		if (n >= 3) {
+		if (n==2){
+			p1.getRack().clear();
+			p2.getRack().clear();
+		}
+		if (n == 3) {
+			p1.getRack().clear();
+			p2.getRack().clear();
 			p3.getRack().clear();
 		}
 		if (n == 4){
+			p1.getRack().clear();
+			p2.getRack().clear();
+			p3.getRack().clear();
 			p4.getRack().clear();
 		}
 		do {
@@ -52,13 +59,22 @@ public class Game {
 		} while (b < 20 + n * 10);
 		// shuffle and deal 10 to each player
 		Collections.shuffle(draw);
+		System.out.println(draw);
+		
 		while (draw.size() > 20) {
-			p1.getRack().add(draw.pop());
-			p2.getRack().add(draw.pop());
-			if (n >= 3) {
+			if (n== 2){
+				p1.getRack().add(draw.pop());
+				p2.getRack().add(draw.pop());
+			}
+			if (n == 3) {
+				p1.getRack().add(draw.pop());
+				p2.getRack().add(draw.pop());
 				p3.getRack().add(draw.pop());
 			}
 			if (n == 4) {
+				p1.getRack().add(draw.pop());
+				p2.getRack().add(draw.pop());
+				p3.getRack().add(draw.pop());
 				p4.getRack().add(draw.pop());
 			}
 		}
