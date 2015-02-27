@@ -9,8 +9,9 @@ public class Master extends JFrame implements ActionListener {
 	MainWindow main;
 	playerWindow pw1, pw2, pw3, pw4;
 	Game game;
-	String congratulations;
+	String congratulations, hasRackO;
 	int numPlay;
+	int drawDeckSize = 20;
 
 	Master(String title) {
 		super(title);
@@ -40,56 +41,94 @@ public class Master extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent evt) {
 		// actions upon button presses
 		if (evt.getActionCommand().equals("start")) {
-			// draws from the draw pile for each player based on round,
-			// different mods for different number of players
-			// in order to keep the rounds accurate and make sure it is the
-			// correct person's turn
+			// starts the game when a number of players is entered in the text
+			// field and the button is pressed
+			// if there are less than 3 or 4 players, those player windows will
+			// dissapear
 			numPlay = Integer.parseInt(main.numPlay.getText().substring(
 					main.numPlay.getText().length() - 1));
 			game.newGame(numPlay);
 			game.newHand(numPlay);
+			main.numCardsInDrawPile.setText(Integer.toString(drawDeckSize));
+			if (numPlay < 4) {
+				pw4.setVisible(false);
+				if (numPlay < 3) {
+					pw3.setVisible(false);
+				}
+			}
 		}
 		if (evt.getActionCommand().equals("draw")) {
+			// draws from the draw pile for each player based on round,
+			// different mods for different number of players
+			// in order to keep the rounds accurate and make sure it is the
+			// correct person's turn
 			if (numPlay == 2) {
 				if (game.round % 2 == 0) {
 					pw1.hand.setText("" + game.getDraw().peek());
 					game.getPlayer1().getHand().add(game.getDraw().pop());
+					drawDeckSize--;
+					main.numCardsInDrawPile.setText(Integer
+							.toString(drawDeckSize));
 				}
 				if (game.round % 2 == 1) {
 					pw2.hand.setText("" + game.getDraw().peek());
 					game.getPlayer2().getHand().add(game.getDraw().pop());
+					drawDeckSize--;
+					main.numCardsInDrawPile.setText(Integer
+							.toString(drawDeckSize));
 				}
 			}
 			if (numPlay == 3) {
 				if (game.round % 3 == 0) {
 					pw1.hand.setText("" + game.getDraw().peek());
 					game.getPlayer1().getHand().add(game.getDraw().pop());
+					drawDeckSize--;
+					main.numCardsInDrawPile.setText(Integer
+							.toString(drawDeckSize));
 				}
 				if (game.round % 3 == 1) {
 					pw2.hand.setText("" + game.getDraw().peek());
 					game.getPlayer2().getHand().add(game.getDraw().pop());
+					drawDeckSize--;
+					main.numCardsInDrawPile.setText(Integer
+							.toString(drawDeckSize));
 				}
 				if (game.round % 3 == 2) {
 					pw3.hand.setText("" + game.getDraw().peek());
 					game.getPlayer3().getHand().add(game.getDraw().pop());
+					drawDeckSize--;
+					main.numCardsInDrawPile.setText(Integer
+							.toString(drawDeckSize));
 				}
 			}
 			if (numPlay == 4) {
 				if (game.round % 4 == 0) {
 					pw1.hand.setText("" + game.getDraw().peek());
 					game.getPlayer1().getHand().add(game.getDraw().pop());
+					drawDeckSize--;
+					main.numCardsInDrawPile.setText(Integer
+							.toString(drawDeckSize));
 				}
 				if (game.round % 4 == 1) {
 					pw2.hand.setText("" + game.getDraw().peek());
 					game.getPlayer2().getHand().add(game.getDraw().pop());
+					drawDeckSize--;
+					main.numCardsInDrawPile.setText(Integer
+							.toString(drawDeckSize));
 				}
 				if (game.round % 4 == 2) {
 					pw3.hand.setText("" + game.getDraw().peek());
 					game.getPlayer3().getHand().add(game.getDraw().pop());
+					drawDeckSize--;
+					main.numCardsInDrawPile.setText(Integer
+							.toString(drawDeckSize));
 				}
 				if (game.round % 4 == 3) {
 					pw4.hand.setText("" + game.getDraw().peek());
 					game.getPlayer4().getHand().add(game.getDraw().pop());
+					drawDeckSize--;
+					main.numCardsInDrawPile.setText(Integer
+							.toString(drawDeckSize));
 				}
 			}
 		}
@@ -186,14 +225,69 @@ public class Master extends JFrame implements ActionListener {
 		// and starts a new hand, also checks to see if someone's score is over
 		// 500, at which point the game is over.
 		// also increments round
+		// also checks to see if the draw pile is empty, and if so refills it
 		if (evt.getActionCommand().equals("endTurn1")) {
 			if (game.getPlayer1().rackO()) {
-				game.getPlayer1().sumScore();
-				game.getPlayer2().sumScore();
-				game.getPlayer3().sumScore();
-				game.getPlayer4().sumScore();
+				hasRackO = "Player 1 has Rack-O!";
+				JOptionPane.showMessageDialog(null, hasRackO);
+				if (numPlay >= 2) {
+					game.getPlayer1().sumScore();
+					game.getPlayer2().sumScore();
+					main.scores.setText("Player 1: "
+							+ Integer.toString(game.getPlayer1().getScore())
+							+ "\nPlayer 2: "
+							+ Integer.toString(game.getPlayer2().getScore()));
+					if (numPlay >= 3) {
+						game.getPlayer3().sumScore();
+						main.scores
+								.setText("Player 1: "
+										+ Integer.toString(game.getPlayer1()
+												.getScore())
+										+ "\nPlayer 2: "
+										+ Integer.toString(game.getPlayer2()
+												.getScore())
+										+ "\nPlayer 3: "
+										+ Integer.toString(game.getPlayer3()
+												.getScore()));
+						if (numPlay == 4) {
+							game.getPlayer4().sumScore();
+							main.scores.setText("Player 1: "
+									+ Integer.toString(game.getPlayer1()
+											.getScore())
+									+ "\nPlayer 2: "
+									+ Integer.toString(game.getPlayer2()
+											.getScore())
+									+ "\nPlayer 3: "
+									+ Integer.toString(game.getPlayer3()
+											.getScore())
+									+ "\nPlayer 4: "
+									+ Integer.toString(game.getPlayer4()
+											.getScore()));
+						}
+					}
+				}
 				game.setRound(0);
 				game.newHand(numPlay);
+				if (numPlay >= 2) {
+					for (int i = 0; i < 10; i++) {
+						pw1.rack[i].setText("");
+					}
+					for (int i = 0; i < 10; i++) {
+						pw2.rack[i].setText("");
+					}
+					if (numPlay >= 3) {
+						for (int i = 0; i < 10; i++) {
+							pw3.rack[i].setText("");
+						}
+						if (numPlay == 4) {
+							for (int i = 0; i < 10; i++) {
+								pw4.rack[i].setText("");
+							}
+						}
+					}
+				}
+				drawDeckSize = 20;
+				main.numCardsInDrawPile.setText(Integer.toString(drawDeckSize));
 			}
 			if (numPlay == 2) {
 				if (game.getPlayer1().getScore() >= 500
@@ -219,15 +313,19 @@ public class Master extends JFrame implements ActionListener {
 					JOptionPane.showMessageDialog(null, congratulations);
 				}
 			}
-		
-		for (int i = 0; i < 10; i++) {
-			pw1.rack[i].setText("");
+
+			for (int i = 0; i < 10; i++) {
+				pw1.rack[i].setText("");
+			}
+			if (game.getDraw().empty()) {
+				game.disToDraw();
+				main.discardTop.setText("Empty");
+				drawDeckSize = 20;
+				main.numCardsInDrawPile.setText(Integer.toString(drawDeckSize));
+			}
+			game.setRound(game.getRound() + 1);
 		}
-		if (game.getDraw()==null){
-			game.disToDraw();
-		}
-		game.setRound(game.getRound() + 1);
-		}
+
 		// Player 2
 		if (evt.getActionCommand().equals("show2")) {
 			for (int i = 0; i < 10; i++) {
@@ -257,150 +355,68 @@ public class Master extends JFrame implements ActionListener {
 		}
 		if (evt.getActionCommand().equals("endTurn2")) {
 			if (game.getPlayer2().rackO()) {
-				game.getPlayer1().sumScore();
-				game.getPlayer2().sumScore();
-				game.getPlayer3().sumScore();
-				game.getPlayer4().sumScore();
+				hasRackO = "Player 2 has Rack-O!";
+				JOptionPane.showMessageDialog(null, hasRackO);
+				if (numPlay >= 2) {
+					game.getPlayer1().sumScore();
+					game.getPlayer2().sumScore();
+					main.scores.setText("Player 1: "
+							+ Integer.toString(game.getPlayer1().getScore())
+							+ "\nPlayer 2: "
+							+ Integer.toString(game.getPlayer2().getScore()));
+					if (numPlay >= 3) {
+						game.getPlayer3().sumScore();
+						main.scores
+								.setText("Player 1: "
+										+ Integer.toString(game.getPlayer1()
+												.getScore())
+										+ "\nPlayer 2: "
+										+ Integer.toString(game.getPlayer2()
+												.getScore())
+										+ "\nPlayer 3: "
+										+ Integer.toString(game.getPlayer3()
+												.getScore()));
+						if (numPlay == 4) {
+							game.getPlayer4().sumScore();
+							main.scores.setText("Player 1: "
+									+ Integer.toString(game.getPlayer1()
+											.getScore())
+									+ "\nPlayer 2: "
+									+ Integer.toString(game.getPlayer2()
+											.getScore())
+									+ "\nPlayer 3: "
+									+ Integer.toString(game.getPlayer3()
+											.getScore())
+									+ "\nPlayer 4: "
+									+ Integer.toString(game.getPlayer4()
+											.getScore()));
+						}
+					}
+				}
 				game.setRound(0);
 				game.newHand(numPlay);
-			}
-			if (numPlay == 2) {
-				if (game.getPlayer1().getScore() >= 500
-						|| game.getPlayer2().getScore() >= 500) {
-					congratulations = "Game Over, thanks for playing! \nPress Reset Game to play again or simply close the program.";
-					JOptionPane.showMessageDialog(null, congratulations);
-				}
-			}
-			if (numPlay >= 3) {
-				if (game.getPlayer1().getScore() >= 500
-						|| game.getPlayer2().getScore() >= 500
-						|| game.getPlayer3().getScore() >= 500) {
-					congratulations = "Game Over, thanks for playing! \nPress Reset Game to play again or simply close the program.";
-					JOptionPane.showMessageDialog(null, congratulations);
-				}
-			}
-			if (numPlay == 4) {
-				if (game.getPlayer1().getScore() >= 500
-						|| game.getPlayer2().getScore() >= 500
-						|| game.getPlayer3().getScore() >= 500
-						|| game.getPlayer4().getScore() >= 500) {
-					congratulations = "Game Over, thanks for playing! \nPress Reset Game to play again or simply close the program.";
-					JOptionPane.showMessageDialog(null, congratulations);
-				}
-			}
-			for (int i = 0; i < 10; i++) {
-				pw2.rack[i].setText("");
-			}
-			if (game.getDraw()==null){
-				game.disToDraw();
-			}
-			game.setRound(game.getRound() + 1);
-		}
-		// Player 3
-		if (evt.getActionCommand().equals("show3")) {
-			if (numPlay < 3) {
-				// these if statements, throughout the player 3 and 4 methods,
-				// disable the buttons for these players
-				// if the user said that there are only 2 or three players, we
-				// added some hidden messages for fun
-				pw3.show.setText("u thug");
-				pw3.hand.setEnabled(false);
-				pw3.show.setEnabled(false);
-			} else
-				for (int i = 0; i < 10; i++) {
-					pw3.rack[i]
-							.setText("" + game.getPlayer3().getRack().get(i));
-				}
-		}
-		if (evt.getActionCommand().equals("hide3")) {
-			if (numPlay < 3) {
-				pw3.hide.setText("so kl");
-				pw3.hide.setEnabled(false);
-			} else
-				for (int i = 0; i < 10; i++) {
-					pw3.rack[i].setText("");
-				}
-		}
-		for (int i = 0; i < 10; i++) {
-			if (evt.getActionCommand().equals("" + i + "_3")) {
-				if (numPlay < 3) {
-					if (i == 0) {
-						pw3.rack[0].setText("but stop");
+				if (numPlay >= 2) {
+					for (int i = 0; i < 10; i++) {
+						pw1.rack[i].setText("");
 					}
-					if (i == 1) {
-						pw3.rack[1].setText("now");
+					for (int i = 0; i < 10; i++) {
+						pw2.rack[i].setText("");
 					}
-					if (i == 2) {
-						pw3.rack[2].setText("4 rl");
+					if (numPlay >= 3) {
+						for (int i = 0; i < 10; i++) {
+							pw3.rack[i].setText("");
+						}
+						if (numPlay == 4) {
+							for (int i = 0; i < 10; i++) {
+								pw4.rack[i].setText("");
+							}
+						}
 					}
-					if (i == 3) {
-						pw3.rack[3].setText("i mean it");
-					}
-					if (i == 4) {
-						pw3.rack[4].setText("stop");
-					}
-					if (i == 5) {
-						pw3.rack[5].setText("really?");
-					}
-					if (i == 6) {
-						pw3.rack[6].setText("still?");
-					}
-					if (i == 7) {
-						pw3.rack[7].setText("play the game");
-					}
-					if (i == 8) {
-						pw3.rack[8].setText("shoo");
-					}
-					if (i == 9) {
-						pw3.rack[9].setText("SHOOOO");
-					}
-					pw3.rack[i].setEnabled(false);
-				} else
-					main.discardTop.setText(""
-							+ game.getPlayer3().getRack().get(i));
-				game.getDiscard().push(game.getPlayer3().getRack().get(i));
-				game.getPlayer3().getRack()
-						.set(i, Integer.parseInt(pw3.hand.getText()));
-				pw3.rack[i].setText(pw3.hand.getText());
-				pw3.hand.setText("");
-			}
-		}
-		if (evt.getActionCommand().equals("discard3")) {
-			if (numPlay < 3) {
-				pw3.discard.setText("...");
-				pw3.discard.setEnabled(false);
-			} else
-				game.getDiscard().push(Integer.parseInt(pw3.hand.getText()));
-			main.discardTop.setText(pw3.hand.getText());
-			pw3.hand.setText("");
-		}
-		if (evt.getActionCommand().equals("endTurn3")) {
-			if (numPlay < 3) {
-				pw3.endTurn.setText("ok bye");
-				pw3.show.setText("");
-				pw3.hide.setText("");
-				pw3.discard.setText("");
-				pw4.show.setText("");
-				pw4.hide.setText("");
-				pw4.discard.setText("");
-				pw4.endTurn.setText("");
-				pw3.endTurn.setEnabled(false);
-				pw4.show.setEnabled(false);
-				pw4.hide.setEnabled(false);
-				for (int i = 0; i < 10; i++) {
-					pw4.rack[i].setEnabled(false);
-				}
-				pw4.hand.setEnabled(false);
-				pw4.discard.setEnabled(false);
-				pw4.endTurn.setEnabled(false);
-			} else if (game.getPlayer3().rackO()) {
-				game.getPlayer1().sumScore();
-				game.getPlayer2().sumScore();
-				game.getPlayer3().sumScore();
-				game.getPlayer4().sumScore();
-				game.setRound(0);
-				game.newHand(numPlay);
 
+					drawDeckSize = 20;
+					main.numCardsInDrawPile.setText(Integer
+							.toString(drawDeckSize));
+				}
 				if (numPlay == 2) {
 					if (game.getPlayer1().getScore() >= 500
 							|| game.getPlayer2().getScore() >= 500) {
@@ -425,84 +441,293 @@ public class Master extends JFrame implements ActionListener {
 						JOptionPane.showMessageDialog(null, congratulations);
 					}
 				}
+				for (int i = 0; i < 10; i++) {
+					pw2.rack[i].setText("");
+				}
+				if (game.getDraw().empty()) {
+					game.disToDraw();
+					main.discardTop.setText("Empty");
+					drawDeckSize = 20;
+					main.numCardsInDrawPile.setText(Integer
+							.toString(drawDeckSize));
+				}
+				game.setRound(game.getRound() + 1);
 			}
-			for (int i = 0; i < 10; i++) {
-				pw3.rack[i].setText("");
+			// Player 3
+			if (evt.getActionCommand().equals("show3")) {
+				for (int i = 0; i < 10; i++) {
+					pw3.rack[i]
+							.setText("" + game.getPlayer3().getRack().get(i));
+				}
 			}
-			if (game.getDraw()==null){
-				game.disToDraw();
-			}
-			game.setRound(game.getRound() + 1);
-		}
-		// Player 4
-		if (evt.getActionCommand().equals("show4")) {
-			for (int i = 0; i < 10; i++) {
-				pw4.rack[i].setText("" + game.getPlayer4().getRack().get(i));
-			}
-		}
-		if (evt.getActionCommand().equals("hide4")) {
-			for (int i = 0; i < 10; i++) {
-				pw4.rack[i].setText("");
-			}
-		}
+			if (evt.getActionCommand().equals("hide3")) {
 
-		for (int i = 0; i < 10; i++) {
-			if (evt.getActionCommand().equals("" + i + "_4")) {
-				main.discardTop
-						.setText("" + game.getPlayer4().getRack().get(i));
-				game.getDiscard().push(game.getPlayer4().getRack().get(i));
-				game.getPlayer4().getRack()
-						.set(i, Integer.parseInt(pw4.hand.getText()));
-				pw4.rack[i].setText(pw4.hand.getText());
-				pw4.hand.setText("");
-			}
-		}
-		if (evt.getActionCommand().equals("discard4")) {
-			game.getDiscard().push(Integer.parseInt(pw4.hand.getText()));
-			main.discardTop.setText(pw4.hand.getText());
-			pw4.hand.setText("");
-		}
-
-		if (evt.getActionCommand().equals("endTurn4")) {
-			if (game.getPlayer4().rackO()) {
-				game.getPlayer1().sumScore();
-				game.getPlayer2().sumScore();
-				game.getPlayer3().sumScore();
-				game.getPlayer4().sumScore();
-				game.setRound(0);
-				game.newHand(numPlay);
-			}
-			if (numPlay == 2) {
-				if (game.getPlayer1().getScore() >= 500
-						|| game.getPlayer2().getScore() >= 500) {
-					congratulations = "Game Over, thanks for playing! \nPress Reset Game to play again or simply close the program.";
-					JOptionPane.showMessageDialog(null, congratulations);
-				}
-			}
-			if (numPlay >= 3) {
-				if (game.getPlayer1().getScore() >= 500
-						|| game.getPlayer2().getScore() >= 500
-						|| game.getPlayer3().getScore() >= 500) {
-					congratulations = "Game Over, thanks for playing! \nPress Reset Game to play again or simply close the program.";
-					JOptionPane.showMessageDialog(null, congratulations);
-				}
-			}
-			if (numPlay >= 4) {
-				if (game.getPlayer1().getScore() >= 500
-						|| game.getPlayer2().getScore() >= 500
-						|| game.getPlayer3().getScore() >= 500
-						|| game.getPlayer4().getScore() >= 500) {
-					congratulations = "Game Over, thanks for playing! \nPress Reset Game to play again or simply close the program.";
-					JOptionPane.showMessageDialog(null, congratulations);
+				for (int i = 0; i < 10; i++) {
+					pw3.rack[i].setText("");
 				}
 			}
 			for (int i = 0; i < 10; i++) {
-				pw4.rack[i].setText("");
+				if (evt.getActionCommand().equals("" + i + "_3")) {
+
+					main.discardTop.setText(""
+							+ game.getPlayer3().getRack().get(i));
+					game.getDiscard().push(game.getPlayer3().getRack().get(i));
+					game.getPlayer3().getRack()
+							.set(i, Integer.parseInt(pw3.hand.getText()));
+					pw3.rack[i].setText(pw3.hand.getText());
+					pw3.hand.setText("");
+				}
 			}
-			if (game.getDraw()==null){
-				game.disToDraw();
+			if (evt.getActionCommand().equals("discard3")) {
+
+				game.getDiscard().push(Integer.parseInt(pw3.hand.getText()));
+				main.discardTop.setText(pw3.hand.getText());
+				pw3.hand.setText("");
 			}
-			game.setRound(game.getRound() + 1);
+			if (evt.getActionCommand().equals("endTurn3")) {
+				if (game.getPlayer3().rackO()) {
+					hasRackO = "Player 3 has Rack-O";
+					JOptionPane.showMessageDialog(null, hasRackO);
+					if (numPlay >= 2) {
+						game.getPlayer1().sumScore();
+						game.getPlayer2().sumScore();
+						main.scores
+								.setText("Player 1: "
+										+ Integer.toString(game.getPlayer1()
+												.getScore())
+										+ "\nPlayer 2: "
+										+ Integer.toString(game.getPlayer2()
+												.getScore()));
+						if (numPlay >= 3) {
+							game.getPlayer3().sumScore();
+							main.scores.setText("Player 1: "
+									+ Integer.toString(game.getPlayer1()
+											.getScore())
+									+ "\nPlayer 2: "
+									+ Integer.toString(game.getPlayer2()
+											.getScore())
+									+ "\nPlayer 3: "
+									+ Integer.toString(game.getPlayer3()
+											.getScore()));
+							if (numPlay == 4) {
+								game.getPlayer4().sumScore();
+								main.scores.setText("Player 1: "
+										+ Integer.toString(game.getPlayer1()
+												.getScore())
+										+ "\nPlayer 2: "
+										+ Integer.toString(game.getPlayer2()
+												.getScore())
+										+ "\nPlayer 3: "
+										+ Integer.toString(game.getPlayer3()
+												.getScore())
+										+ "\nPlayer 4: "
+										+ Integer.toString(game.getPlayer4()
+												.getScore()));
+							}
+						}
+					}
+					game.setRound(0);
+					game.newHand(numPlay);
+					if (numPlay >= 2) {
+						for (int i = 0; i < 10; i++) {
+							pw1.rack[i].setText("");
+						}
+						for (int i = 0; i < 10; i++) {
+							pw2.rack[i].setText("");
+						}
+						if (numPlay >= 3) {
+							for (int i = 0; i < 10; i++) {
+								pw3.rack[i].setText("");
+							}
+							if (numPlay == 4) {
+								for (int i = 0; i < 10; i++) {
+									pw4.rack[i].setText("");
+								}
+							}
+						}
+
+						drawDeckSize = 20;
+						main.numCardsInDrawPile.setText(Integer
+								.toString(drawDeckSize));
+
+						if (numPlay == 2) {
+							if (game.getPlayer1().getScore() >= 500
+									|| game.getPlayer2().getScore() >= 500) {
+								congratulations = "Game Over, thanks for playing! \nPress Reset Game to play again or simply close the program.";
+								JOptionPane.showMessageDialog(null,
+										congratulations);
+							}
+						}
+						if (numPlay >= 3) {
+							if (game.getPlayer1().getScore() >= 500
+									|| game.getPlayer2().getScore() >= 500
+									|| game.getPlayer3().getScore() >= 500) {
+								congratulations = "Game Over, thanks for playing! \nPress Reset Game to play again or simply close the program.";
+								JOptionPane.showMessageDialog(null,
+										congratulations);
+							}
+						}
+						if (numPlay == 4) {
+							if (game.getPlayer1().getScore() >= 500
+									|| game.getPlayer2().getScore() >= 500
+									|| game.getPlayer3().getScore() >= 500
+									|| game.getPlayer4().getScore() >= 500) {
+								congratulations = "Game Over, thanks for playing! \nPress Reset Game to play again or simply close the program.";
+								JOptionPane.showMessageDialog(null,
+										congratulations);
+							}
+						}
+					}
+					for (int i = 0; i < 10; i++) {
+						pw3.rack[i].setText("");
+					}
+					if (game.getDraw().empty()) {
+						game.disToDraw();
+						main.discardTop.setText("Empty");
+						drawDeckSize = 20;
+						main.numCardsInDrawPile.setText(Integer
+								.toString(drawDeckSize));
+					}
+					game.setRound(game.getRound() + 1);
+				}
+				// Player 4
+				if (evt.getActionCommand().equals("show4")) {
+					for (int i = 0; i < 10; i++) {
+						pw4.rack[i].setText(""
+								+ game.getPlayer4().getRack().get(i));
+					}
+				}
+				if (evt.getActionCommand().equals("hide4")) {
+					for (int i = 0; i < 10; i++) {
+						pw4.rack[i].setText("");
+					}
+				}
+
+				for (int i = 0; i < 10; i++) {
+					if (evt.getActionCommand().equals("" + i + "_4")) {
+						main.discardTop.setText(""
+								+ game.getPlayer4().getRack().get(i));
+						game.getDiscard().push(
+								game.getPlayer4().getRack().get(i));
+						game.getPlayer4().getRack()
+								.set(i, Integer.parseInt(pw4.hand.getText()));
+						pw4.rack[i].setText(pw4.hand.getText());
+						pw4.hand.setText("");
+					}
+				}
+				if (evt.getActionCommand().equals("discard4")) {
+					game.getDiscard()
+							.push(Integer.parseInt(pw4.hand.getText()));
+					main.discardTop.setText(pw4.hand.getText());
+					pw4.hand.setText("");
+				}
+
+				if (evt.getActionCommand().equals("endTurn4")) {
+					if (game.getPlayer4().rackO()) {
+						hasRackO = "Player 4 has Rack-O!";
+						JOptionPane.showMessageDialog(null, hasRackO);
+						if (numPlay >= 2) {
+							game.getPlayer1().sumScore();
+							game.getPlayer2().sumScore();
+							main.scores.setText("Player 1: "
+									+ Integer.toString(game.getPlayer1()
+											.getScore())
+									+ " Player 2: "
+									+ Integer.toString(game.getPlayer2()
+											.getScore()));
+							if (numPlay >= 3) {
+								game.getPlayer3().sumScore();
+								main.scores.setText("Player 1: "
+										+ Integer.toString(game.getPlayer1()
+												.getScore())
+										+ " Player 2: "
+										+ Integer.toString(game.getPlayer2()
+												.getScore())
+										+ " Player 3: "
+										+ Integer.toString(game.getPlayer3()
+												.getScore()));
+								if (numPlay == 4) {
+									game.getPlayer4().sumScore();
+									main.scores.setText("Player 1: "
+											+ Integer.toString(game
+													.getPlayer1().getScore())
+											+ " Player 2: "
+											+ Integer.toString(game
+													.getPlayer2().getScore())
+											+ " Player 3: "
+											+ Integer.toString(game
+													.getPlayer3().getScore())
+											+ " Player 4: "
+											+ Integer.toString(game
+													.getPlayer4().getScore()));
+								}
+							}
+						}
+						game.setRound(0);
+						game.newHand(numPlay);
+						if (numPlay >= 2) {
+							for (int i = 0; i < 10; i++) {
+								pw1.rack[i].setText("");
+							}
+							for (int i = 0; i < 10; i++) {
+								pw2.rack[i].setText("");
+							}
+							if (numPlay >= 3) {
+								for (int i = 0; i < 10; i++) {
+									pw3.rack[i].setText("");
+								}
+								if (numPlay == 4) {
+									for (int i = 0; i < 10; i++) {
+										pw4.rack[i].setText("");
+									}
+								}
+							}
+
+							drawDeckSize = 20;
+							main.numCardsInDrawPile.setText(Integer
+									.toString(drawDeckSize));
+						}
+						if (numPlay == 2) {
+							if (game.getPlayer1().getScore() >= 500
+									|| game.getPlayer2().getScore() >= 500) {
+								congratulations = "Game Over, thanks for playing! \nPress Reset Game to play again or simply close the program.";
+								JOptionPane.showMessageDialog(null,
+										congratulations);
+							}
+						}
+						if (numPlay >= 3) {
+							if (game.getPlayer1().getScore() >= 500
+									|| game.getPlayer2().getScore() >= 500
+									|| game.getPlayer3().getScore() >= 500) {
+								congratulations = "Game Over, thanks for playing! \nPress Reset Game to play again or simply close the program.";
+								JOptionPane.showMessageDialog(null,
+										congratulations);
+							}
+						}
+						if (numPlay >= 4) {
+							if (game.getPlayer1().getScore() >= 500
+									|| game.getPlayer2().getScore() >= 500
+									|| game.getPlayer3().getScore() >= 500
+									|| game.getPlayer4().getScore() >= 500) {
+								congratulations = "Game Over, thanks for playing! \nPress Reset Game to play again or simply close the program.";
+								JOptionPane.showMessageDialog(null,
+										congratulations);
+							}
+						}
+						for (int i = 0; i < 10; i++) {
+							pw4.rack[i].setText("");
+						}
+						if (game.getDraw().empty()) {
+							game.disToDraw();
+							main.discardTop.setText("Empty");
+							drawDeckSize = 20;
+							main.numCardsInDrawPile.setText(Integer
+									.toString(drawDeckSize));
+						}
+						game.setRound(game.getRound() + 1);
+					}
+				}
+			}
 		}
 	}
 
