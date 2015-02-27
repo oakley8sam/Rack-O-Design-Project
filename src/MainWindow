@@ -1,8 +1,7 @@
 import java.awt.*;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 
 public class MainWindow extends JPanel{
 	//the buttons seen in the middle section of the gui
@@ -18,7 +17,7 @@ public class MainWindow extends JPanel{
 	MainWindow(Master a){
 		//create the buttons and allow them to be linked to actions
 		super();
-		setLayout(new GridLayout(2,2)); //prettier layout
+		setLayout(new GridLayout(0,2)); //prettier layout
 		setSize(400,400);
 		
 		start = new JButton("Start Game");
@@ -33,10 +32,9 @@ public class MainWindow extends JPanel{
 		add(start);
 		add(drawPile);
 		add(discardPile);
-		add(scores);
-		add(discardTop);
 		add(numCardsInDrawPile);
-		
+		add(discardTop);
+		add(scores);
 		setVisible(true);
 		
 		start.addActionListener(a);
