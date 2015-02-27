@@ -5,17 +5,14 @@ public class Player {
 	private ArrayList<Integer> hand;
 	private ArrayList<Integer> rack;
 	private int score;
-	private int handscore = 0;
 	private Scanner scan;
 	private int swap;
 	//ints k and j are used to scan racks for scores at the end of each hand
-	private int k=0;
-	private int j=-1;
 	public Player(Game a){
 		g1 = a;
 		hand = new ArrayList<Integer>();//the value to player is currently waiting to swap or discard
 		rack = new ArrayList<Integer>();//the ten cards in front of a player
-		score=0;
+		score=450;
 	}
 	public void drawDraw(){
 		//draw from the drawstack
@@ -49,6 +46,9 @@ public class Player {
 	}
 	public int sumScore(){
 		//adds player's hand score at end of each round with total score
+		int handscore=0;
+		int k = 0;
+		int j = -1;
 		if (this.rackO()== true){
 			handscore+=75;
 		}else{
