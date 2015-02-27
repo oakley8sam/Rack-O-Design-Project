@@ -1,8 +1,7 @@
 import java.awt.*;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 
 public class playerWindow extends JPanel{ 
 	//the buttons and labels in each player's panel
