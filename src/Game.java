@@ -1,10 +1,12 @@
+
 import java.util.Collections;
+import javax.swing.JOptionPane;
 import java.util.Stack;
-import java.util.Scanner;
 
 public class Game {
 	private Stack<Integer> draw;
 	private Stack<Integer> discard;
+	private String deckReplace;
 	private int b = 0;
 	private Player p1;
 	private Player p2;
@@ -13,14 +15,14 @@ public class Game {
 	int round;
 
 	public Game() {
+		//creates a game with a deck for the draw pile, and an initially empty deck for the discard pile
 		draw = new Stack<Integer>();
 		discard = new Stack<Integer>();
 		round = 0;
 	}
 
 	public void newGame(int n) {
-		// ask how many players and create a stack for a deck of that many
-		// people
+		// ask how many players
 		p1 = new Player(this);
 		p2 = new Player(this);
 		if (n >= 3) {
@@ -32,6 +34,8 @@ public class Game {
 	}
 
 	public void newHand(int n) {
+		//empties hands and decks if they are filled with any values in order to start a new hand
+		//creates a deck and deals to all players based on number of players entered by the user
 		draw.clear();
 		discard.clear();
 		p1.getRack().clear();
@@ -67,7 +71,10 @@ public class Game {
 				draw.add(discard.pop());
 			}
 		}
+		deckReplace = "The draw pile was emptied, so the discard pile is being reshuffled into the draw pile.";
+		JOptionPane.showMessageDialog(null, deckReplace);
 		Collections.shuffle(draw);
+		
 	}
 
 	public Stack<Integer> getDraw() {
@@ -81,26 +88,32 @@ public class Game {
 	}
 
 	public Player getPlayer1() {
+		//getter for player 1
 		return p1;
 	}
 
 	public Player getPlayer2() {
+		//getter for player 2
 		return p2;
 	}
 
 	public Player getPlayer3() {
+		//getter for player 3
 		return p3;
 	}
 
 	public Player getPlayer4() {
+		//getter for player 4
 		return p4;
 	}
 
 	public int getRound() {
+		//getter for round
 		return round;
 	}
 
 	public void setRound(int a) {
+		//setter for round
 		round = a;
 	}
 
