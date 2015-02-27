@@ -11,11 +11,6 @@ public class Player {
 	//ints k and j are used to scan racks for scores at the end of each hand
 	private int k=0;
 	private int j=-1;
-	/*public Player(ArrayList<Integer> h, ArrayList<Integer> r, int s){
-		hand=h; //the value to player is currently waiting to swap or discard
-		rack=r; //the ten cards in front of a player
-		score=s;
-	}*/
 	public Player(Game a){
 		g1 = a;
 		hand = new ArrayList<Integer>();//the value to player is currently waiting to swap or discard
@@ -45,7 +40,7 @@ public class Player {
 	}
 	public boolean rackO(){
 		//check to see if a player has "RACK-O" (ascending number array list)
-		for (int i=0; i<rack.size(); i++){
+		for (int i=0; i<rack.size()-1; i++){
 			if (rack.get(i+1)<rack.get(i)) {
 				return false;
 			} 
@@ -62,12 +57,8 @@ public class Player {
 				j++;
 				k++;
 				handscore+=5;
-			}while (rack.get(j)<rack.get(k) && j<rack.size());
-			
+			}while (rack.get(j)<rack.get(k) && j<rack.size());	
 		}
-		//this if statement adds five points if the last card is bigger than the second to last, as the do/while would miss that last card otherwise
-		if (rack.get(9)>rack.get(8))
-			handscore+=5;
 		this.score+=handscore;
 		return this.score;
 	}
@@ -82,11 +73,5 @@ public class Player {
 	public ArrayList<Integer> getHand(){
 		//getter for the player's hand
 		return hand;
-	}
-
-	public static void main (String[]args){
-		Game a = new Game();
-		Player s = new Player(a);
-		System.out.println(s.getScore());
 	}	
 }
