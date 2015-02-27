@@ -43,8 +43,14 @@ public class Master extends JFrame implements ActionListener {
 			// field and the button is pressed
 			// if there are less than 3 or 4 players, those player windows will
 			// disappear
+			main.start.setText("Reset Game");
 			numPlay = Integer.parseInt(main.numPlay.getText().substring(
 					main.numPlay.getText().length() - 1));
+			game.setRound(0);
+			pw1.setVisible(true);
+			pw2.setVisible(true);
+			pw3.setVisible(true);
+			pw4.setVisible(true);
 			game.newGame(numPlay);
 			game.newHand(numPlay);
 			main.numCardsInDrawPile.setText(Integer.toString(drawDeckSize));
@@ -52,6 +58,26 @@ public class Master extends JFrame implements ActionListener {
 				pw4.setVisible(false);
 				if (numPlay < 3) {
 					pw3.setVisible(false);
+				}
+			}
+			for (int i = 0; i < 10; i++) {
+				pw1.rack[i].setText("");
+			}
+			for (int i = 0; i < 10; i++) {
+				pw2.rack[i].setText("");
+			}
+			pw1.hand.setText("");
+			pw2.hand.setText("");
+			if (numPlay == 3) {
+				for (int i = 0; i < 10; i++) {
+					pw3.rack[i].setText("");
+					pw3.hand.setText("");
+				}
+			}
+			if (numPlay == 4) {
+				for (int i = 0; i < 10; i++) {
+					pw4.rack[i].setText("");
+					pw4.hand.setText("");
 				}
 			}
 		}
@@ -293,7 +319,7 @@ public class Master extends JFrame implements ActionListener {
 			if (numPlay == 2) {
 				if (game.getPlayer1().getScore() >= 500
 						|| game.getPlayer2().getScore() >= 500) {
-					congratulations = "Game Over, thanks for playing! Close and reopen the window to play the game.";
+					congratulations = "Game Over, thanks for playing! Hit Reset to play again, or close the window to end the program.";
 					JOptionPane.showMessageDialog(null, congratulations);
 				}
 			}
@@ -301,7 +327,7 @@ public class Master extends JFrame implements ActionListener {
 				if (game.getPlayer1().getScore() >= 500
 						|| game.getPlayer2().getScore() >= 500
 						|| game.getPlayer3().getScore() >= 500) {
-					congratulations = "Game Over, thanks for playing! Close and reopen the window to play the game.";
+					congratulations = "Game Over, thanks for playing! Hit Reset to play again, or close the window to end the program.";
 					JOptionPane.showMessageDialog(null, congratulations);
 				}
 			}
@@ -310,7 +336,7 @@ public class Master extends JFrame implements ActionListener {
 						|| game.getPlayer2().getScore() >= 500
 						|| game.getPlayer3().getScore() >= 500
 						|| game.getPlayer4().getScore() >= 500) {
-					congratulations = "Game Over, thanks for playing! Close and reopen the window to play the game.";
+					congratulations = "Game Over, thanks for playing! Hit Reset to play again, or close the window to end the program.";
 					JOptionPane.showMessageDialog(null, congratulations);
 				}
 			}
@@ -421,7 +447,7 @@ public class Master extends JFrame implements ActionListener {
 			if (numPlay == 2) {
 				if (game.getPlayer1().getScore() >= 500
 						|| game.getPlayer2().getScore() >= 500) {
-					congratulations = "Game Over, thanks for playing! Close and reopen the window to play the game.";
+					congratulations = "Game Over, thanks for playing! Hit Reset to play again, or close the window to end the program.";
 					JOptionPane.showMessageDialog(null, congratulations);
 				}
 			}
@@ -429,7 +455,7 @@ public class Master extends JFrame implements ActionListener {
 				if (game.getPlayer1().getScore() >= 500
 						|| game.getPlayer2().getScore() >= 500
 						|| game.getPlayer3().getScore() >= 500) {
-					congratulations = "Game Over, thanks for playing! Close and reopen the window to play the game.";
+					congratulations = "Game Over, thanks for playing! Hit Reset to play again, or close the window to end the program.";
 					JOptionPane.showMessageDialog(null, congratulations);
 				}
 			}
@@ -438,7 +464,7 @@ public class Master extends JFrame implements ActionListener {
 						|| game.getPlayer2().getScore() >= 500
 						|| game.getPlayer3().getScore() >= 500
 						|| game.getPlayer4().getScore() >= 500) {
-					congratulations = "Game Over, thanks for playing! Close and reopen the window to play the game.";
+					congratulations = "Game Over, thanks for playing! Hit Reset to play again, or close the window to end the program.";
 					JOptionPane.showMessageDialog(null, congratulations);
 				}
 			}
@@ -552,7 +578,7 @@ public class Master extends JFrame implements ActionListener {
 			if (numPlay == 2) {
 				if (game.getPlayer1().getScore() >= 500
 						|| game.getPlayer2().getScore() >= 500) {
-					congratulations = "Game Over, thanks for playing! Close and reopen the window to play the game.";
+					congratulations = "Game Over, thanks for playing! Hit Reset to play again, or close the window to end the program.";
 					JOptionPane.showMessageDialog(null, congratulations);
 				}
 			}
@@ -560,7 +586,7 @@ public class Master extends JFrame implements ActionListener {
 				if (game.getPlayer1().getScore() >= 500
 						|| game.getPlayer2().getScore() >= 500
 						|| game.getPlayer3().getScore() >= 500) {
-					congratulations = "Game Over, thanks for playing! Close and reopen the window to play the game.";
+					congratulations = "Game Over, thanks for playing! Hit Reset to play again, or close the window to end the program.";
 					JOptionPane.showMessageDialog(null, congratulations);
 				}
 			}
@@ -569,7 +595,7 @@ public class Master extends JFrame implements ActionListener {
 						|| game.getPlayer2().getScore() >= 500
 						|| game.getPlayer3().getScore() >= 500
 						|| game.getPlayer4().getScore() >= 500) {
-					congratulations = "Game Over, thanks for playing! Close and reopen the window to play the game.";
+					congratulations = "Game Over, thanks for playing! Hit Reset to play again, or close the window to end the program.";
 					JOptionPane.showMessageDialog(null, congratulations);
 				}
 			}
@@ -681,7 +707,7 @@ public class Master extends JFrame implements ActionListener {
 			if (numPlay == 2) {
 				if (game.getPlayer1().getScore() >= 500
 						|| game.getPlayer2().getScore() >= 500) {
-					congratulations = "Game Over, thanks for playing! Close and reopen the window to play the game.";
+					congratulations = "Game Over, thanks for playing! Hit Reset to play again, or close the window to end the program.";
 					JOptionPane.showMessageDialog(null, congratulations);
 				}
 			}
@@ -689,7 +715,7 @@ public class Master extends JFrame implements ActionListener {
 				if (game.getPlayer1().getScore() >= 500
 						|| game.getPlayer2().getScore() >= 500
 						|| game.getPlayer3().getScore() >= 500) {
-					congratulations = "Game Over, thanks for playing! Close and reopen the window to play the game.";
+					congratulations = "Game Over, thanks for playing! Hit Reset to play again, or close the window to end the program.";
 					JOptionPane.showMessageDialog(null, congratulations);
 				}
 			}
@@ -698,7 +724,7 @@ public class Master extends JFrame implements ActionListener {
 						|| game.getPlayer2().getScore() >= 500
 						|| game.getPlayer3().getScore() >= 500
 						|| game.getPlayer4().getScore() >= 500) {
-					congratulations = "Game Over, thanks for playing! Close and reopen the window to play the game.";
+					congratulations = "Game Over, thanks for playing! Hit Reset to play again, or close the window to end the program.";
 					JOptionPane.showMessageDialog(null, congratulations);
 				}
 			}
