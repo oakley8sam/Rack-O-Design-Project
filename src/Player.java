@@ -7,7 +7,6 @@ public class Player {
 	private int score;
 	private Scanner scan;
 	private int swap;
-	//ints k and j are used to scan racks for scores at the end of each hand
 	public Player(Game a){
 		g1 = a;
 		hand = new ArrayList<Integer>();//the value to player is currently waiting to swap or discard
@@ -47,7 +46,7 @@ public class Player {
 	public int sumScore(){
 		//adds player's hand score at end of each round with total score
 		int handscore=0;
-		int k = 0;
+		int k = 0; 
 		int j = -1;
 		if (this.rackO()== true){
 			handscore+=75;
